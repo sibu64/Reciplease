@@ -13,6 +13,8 @@ class SearchViewController: UIViewController, UITableViewDelegate {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var addIngredientButton: UIButton!
+    @IBOutlet weak var clearButton: UIButton!
+    @IBOutlet weak var searchButton: UIButton!
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated);
@@ -27,6 +29,11 @@ class SearchViewController: UIViewController, UITableViewDelegate {
         IngredientService.shared.add(ingredient: ingredient)
             
     }
+        tableView.reloadData()
+    }
+    
+    @IBAction func clearIngredients(_ sender: UIButton){
+        IngredientService.shared.removeIngredients()
         tableView.reloadData()
     }
 

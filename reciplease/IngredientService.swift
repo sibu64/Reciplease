@@ -17,4 +17,8 @@ class IngredientService {
     func add(ingredient: Ingredient) {
         ingredients.append(ingredient)
     }
+    func removeIngredients(){
+        ingredients.removeAll()
+    }
+    
 }

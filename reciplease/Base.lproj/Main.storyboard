@@ -35,25 +35,25 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7as-jS-r18">
-                                <rect key="frame" x="343" y="209" width="30" height="32"/>
+                                <rect key="frame" x="343" y="209" width="30" height="31"/>
                                 <state key="normal" title="Add"/>
                                 <connections>
                                     <action selector="addIngredient:" destination="2Se-TJ-Axw" eventType="touchUpInside" id="g1u-Tc-l3a"/>
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Pkl-ic-oBm">
-                                <rect key="frame" x="0.0" y="313" width="415" height="436"/>
+                                <rect key="frame" x="0.0" y="312" width="422" height="437"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="IngredientViewCell" textLabel="zaH-4G-yRn" rowHeight="44" style="IBUITableViewCellStyleDefault" id="zDA-cu-O3e" userLabel="IngredientViewCell" customClass="IngredientViewCell" customModule="reciplease" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="415" height="44"/>
+                                        <rect key="frame" x="0.0" y="28" width="422" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="zDA-cu-O3e" id="9CS-ju-gBO">
-                                            <rect key="frame" x="0.0" y="0.0" width="415" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="422" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zaH-4G-yRn">
-                                                    <rect key="frame" x="20" y="0.0" width="375" height="44"/>
+                                                    <rect key="frame" x="20" y="0.0" width="382" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -74,7 +74,7 @@
                                 </connections>
                             </tableView>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="K5Z-RA-EXq">
-                                <rect key="frame" x="39" y="209" width="267" height="34"/>
+                                <rect key="frame" x="39" y="208.5" width="267" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="267" id="FPl-FW-hoH"/>
                                 </constraints>
@@ -82,26 +82,29 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What's in your fridge ?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c5a-7d-NjR">
-                                <rect key="frame" x="123" y="145" width="172" height="21"/>
+                                <rect key="frame" x="123.5" y="145" width="171.5" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="laJ-EU-Yhw">
-                                <rect key="frame" x="0.0" y="88" width="415" height="167"/>
-                            </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your ingredients: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gv6-kJ-QXa">
-                                <rect key="frame" x="39" y="263" width="134" height="21"/>
+                                <rect key="frame" x="39" y="263.5" width="133.5" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ff7-zP-2UP">
-                                <rect key="frame" x="340" y="258" width="36" height="31"/>
+                                <rect key="frame" x="340" y="259" width="36" height="30"/>
                                 <state key="normal" title="Clear"/>
+                                <connections>
+                                    <action selector="clearIngredients:" destination="2Se-TJ-Axw" eventType="touchUpInside" id="cIV-1v-3xq"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="evk-yV-AZ3">
-                                <rect key="frame" x="145" y="769" width="125" height="30"/>
+                                <rect key="frame" x="145" y="769" width="132" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="132" id="c87-C2-BgG"/>
+                                </constraints>
                                 <state key="normal" title="Search for recipes"/>
                             </button>
                         </subviews>
@@ -113,21 +116,16 @@
                             <constraint firstItem="Pkl-ic-oBm" firstAttribute="leading" secondItem="Gjn-WN-gRb" secondAttribute="leading" id="6xA-sE-cMQ"/>
                             <constraint firstItem="evk-yV-AZ3" firstAttribute="centerX" secondItem="Pkl-ic-oBm" secondAttribute="centerX" id="DIm-pa-fNK"/>
                             <constraint firstItem="Gjn-WN-gRb" firstAttribute="trailing" secondItem="7as-jS-r18" secondAttribute="trailing" constant="41" id="EZK-Aa-5nC"/>
-                            <constraint firstItem="Gv6-kJ-QXa" firstAttribute="top" secondItem="laJ-EU-Yhw" secondAttribute="bottom" constant="8" id="GHF-Qw-0zQ"/>
-                            <constraint firstItem="laJ-EU-Yhw" firstAttribute="leading" secondItem="Pkl-ic-oBm" secondAttribute="leading" id="Koo-RI-MtG"/>
                             <constraint firstItem="evk-yV-AZ3" firstAttribute="leading" secondItem="Gjn-WN-gRb" secondAttribute="leading" constant="145" id="N5y-bF-zbr"/>
                             <constraint firstItem="K5Z-RA-EXq" firstAttribute="top" secondItem="c5a-7d-NjR" secondAttribute="bottom" constant="43" id="PVJ-OK-8sL"/>
-                            <constraint firstAttribute="bottom" secondItem="laJ-EU-Yhw" secondAttribute="bottom" constant="641" id="PVl-5V-d1f"/>
-                            <constraint firstItem="Ff7-zP-2UP" firstAttribute="top" secondItem="laJ-EU-Yhw" secondAttribute="bottom" constant="3" id="PkX-SH-LDs"/>
                             <constraint firstItem="evk-yV-AZ3" firstAttribute="top" secondItem="Pkl-ic-oBm" secondAttribute="bottom" constant="20" id="Rom-hS-g53"/>
                             <constraint firstItem="Ff7-zP-2UP" firstAttribute="centerY" secondItem="Gv6-kJ-QXa" secondAttribute="centerY" id="Vvj-jN-bDw"/>
                             <constraint firstItem="Gjn-WN-gRb" firstAttribute="trailing" secondItem="c5a-7d-NjR" secondAttribute="trailing" constant="119" id="Xfv-zv-1dJ"/>
-                            <constraint firstItem="evk-yV-AZ3" firstAttribute="centerX" secondItem="laJ-EU-Yhw" secondAttribute="centerX" id="ab9-SD-abd"/>
+                            <constraint firstItem="Pkl-ic-oBm" firstAttribute="top" secondItem="Ff7-zP-2UP" secondAttribute="bottom" constant="23" id="bM6-Rp-uqf"/>
                             <constraint firstItem="7as-jS-r18" firstAttribute="top" secondItem="Gjn-WN-gRb" secondAttribute="top" constant="121" id="fvi-YM-hoQ"/>
                             <constraint firstItem="Ff7-zP-2UP" firstAttribute="centerX" secondItem="7as-jS-r18" secondAttribute="centerX" id="jP8-CJ-wUq"/>
                             <constraint firstItem="K5Z-RA-EXq" firstAttribute="baseline" secondItem="7as-jS-r18" secondAttribute="firstBaseline" id="k3R-Bw-kEf"/>
                             <constraint firstItem="Pkl-ic-oBm" firstAttribute="bottom" secondItem="Gjn-WN-gRb" secondAttribute="bottom" constant="-64" id="nHE-oc-e4U"/>
-                            <constraint firstItem="laJ-EU-Yhw" firstAttribute="top" secondItem="Gjn-WN-gRb" secondAttribute="top" id="nVP-Xl-WL1"/>
                             <constraint firstItem="c5a-7d-NjR" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Gjn-WN-gRb" secondAttribute="leading" id="nWh-3H-TcG"/>
                             <constraint firstItem="K5Z-RA-EXq" firstAttribute="leading" secondItem="Gjn-WN-gRb" secondAttribute="leading" constant="39" id="unf-zZ-eF6"/>
                             <constraint firstItem="Ff7-zP-2UP" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Gv6-kJ-QXa" secondAttribute="trailing" constant="8" symbolic="YES" id="v0q-iv-DNW"/>
@@ -141,6 +139,8 @@
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="addIngredientButton" destination="7as-jS-r18" id="8wa-1J-qYF"/>
+                        <outlet property="clearButton" destination="Ff7-zP-2UP" id="J9K-X3-Ll7"/>
+                        <outlet property="searchButton" destination="evk-yV-AZ3" id="gG7-KR-xPv"/>
                         <outlet property="tableView" destination="Pkl-ic-oBm" id="7c4-fL-PSy"/>
                         <outlet property="textField" destination="K5Z-RA-EXq" id="pvT-1y-Yd2"/>
                     </connections>
