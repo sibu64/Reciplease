@@ -18,6 +18,8 @@ class SearchViewController: UIViewController, UITableViewDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        //self.tabBarController.setupTabBarSeparators()
+        //itemSpacing()
         self.textField.addBottomBorder()
         tableView.reloadData()
         
@@ -37,8 +39,8 @@ class SearchViewController: UIViewController, UITableViewDelegate {
         IngredientService.shared.removeIngredients()
         tableView.reloadData()
     }
+    }
 
-}
 extension SearchViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -60,7 +62,6 @@ extension SearchViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return IngredientService.shared.ingredients.count
     }
-
 }
 
 extension UITextField {
@@ -78,4 +79,46 @@ func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     textField.resignFirstResponder()
     return true
    }
+}
+
+ 
+
+class MyTabBarController: UITabBarController {
+
+    
+   @IBOutlet weak var myTabBar: UITabBar!
+    
+override func viewDidLoad() {
+  super.viewDidLoad()
+  setupTabBarSeparators()
+ }
+    
+    func setupTabBarSeparators() {
+        
+    let itemWidth = floor(self.myTabBar.frame.size.width / CGFloat(self.myTabBar.items!.count))
+
+        // this is the separator width.  1.5px matches the line at the top of the tab bar
+        let separatorWidth: CGFloat = 1.5
+
+        // iterate through the items in the Tab Bar, except the last one
+        for i in 0...((self.myTabBar.items?.count)! - 2) {
+            // make a new separator at the end of each tab bar item
+            let separator = UIView(frame: CGRect(x: itemWidth * CGFloat(i + 1) - CGFloat(separatorWidth / 2), y: 0, width: CGFloat(separatorWidth), height: self.myTabBar.frame.size.height))
+
+            // set the color to light gray (default line color for tab bar)
+            separator.backgroundColor = UIColor.lightGray
+
+            self.myTabBar.addSubview(separator)
+            
+            let topBorder = CALayer()
+            
+            let borderHeight: CGFloat = 2
+            
+            topBorder.borderWidth = borderHeight
+            topBorder.borderColor = UIColor.lightGray.cgColor
+            topBorder.frame = CGRect(x: 0, y: -1, width: self.myTabBar.frame.width, height: borderHeight)
+            self.myTabBar.layer.addSublayer(topBorder)
+            
+        }
+    }
 }
