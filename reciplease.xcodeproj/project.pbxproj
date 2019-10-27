@@ -19,6 +19,7 @@
 		6E3F52782358EBBE00B0A634 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6E3F52772358EBBE00B0A634 /* Assets.xcassets */; };
 		6E3F527B2358EBBE00B0A634 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6E3F52792358EBBE00B0A634 /* LaunchScreen.storyboard */; };
 		6E3F52862358EBBE00B0A634 /* recipleaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E3F52852358EBBE00B0A634 /* recipleaseTests.swift */; };
+		6EE2DD392365C46100D0D26E /* MyTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE2DD382365C46100D0D26E /* MyTabBarController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +49,7 @@
 		6E3F52812358EBBE00B0A634 /* recipleaseTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = recipleaseTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E3F52852358EBBE00B0A634 /* recipleaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = recipleaseTests.swift; sourceTree = "<group>"; };
 		6E3F52872358EBBE00B0A634 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6EE2DD382365C46100D0D26E /* MyTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTabBarController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +94,7 @@
 				6E3F526B2358EBBC00B0A634 /* AppDelegate.swift */,
 				6E3F526D2358EBBC00B0A634 /* SceneDelegate.swift */,
 				6E3F526F2358EBBC00B0A634 /* SearchViewController.swift */,
+				6EE2DD382365C46100D0D26E /* MyTabBarController.swift */,
 				6E0A85312360868D0057F1D6 /* IngredientViewCell.swift */,
 				6E3F52712358EBBC00B0A634 /* Main.storyboard */,
 				6E2F6838235F299F0042C476 /* IngredientService.swift */,
@@ -217,6 +220,7 @@
 			files = (
 				6E0A85322360868D0057F1D6 /* IngredientViewCell.swift in Sources */,
 				6E2F6837235EED990042C476 /* Constants.swift in Sources */,
+				6EE2DD392365C46100D0D26E /* MyTabBarController.swift in Sources */,
 				6E3F52762358EBBC00B0A634 /* reciplease.xcdatamodeld in Sources */,
 				6E2F683B235F2A1D0042C476 /* Ingredient.swift in Sources */,
 				6E3F52702358EBBC00B0A634 /* SearchViewController.swift in Sources */,
