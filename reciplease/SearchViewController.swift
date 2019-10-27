@@ -87,10 +87,11 @@ class MyTabBarController: UITabBarController {
 
     
    @IBOutlet weak var myTabBar: UITabBar!
-    
+   
 override func viewDidLoad() {
   super.viewDidLoad()
   setupTabBarSeparators()
+  barItemAppearance()
  }
     
     func setupTabBarSeparators() {
@@ -112,7 +113,7 @@ override func viewDidLoad() {
             
             let topBorder = CALayer()
             
-            let borderHeight: CGFloat = 2
+            let borderHeight: CGFloat = 1.5
             
             topBorder.borderWidth = borderHeight
             topBorder.borderColor = UIColor.lightGray.cgColor
@@ -121,4 +122,8 @@ override func viewDidLoad() {
             
         }
     }
+    func barItemAppearance(){
+        UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Chalkduster", size: 17)!], for: .normal)
+        UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Chalkduster", size: 17)!], for: .selected)
+}
 }

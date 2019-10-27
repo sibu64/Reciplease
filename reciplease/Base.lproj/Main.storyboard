@@ -67,7 +67,7 @@
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zaH-4G-yRn">
                                                     <rect key="frame" x="20" y="0.0" width="382" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                     <size key="shadowOffset" width="1" height="1"/>
@@ -86,20 +86,14 @@
                                     <outlet property="delegate" destination="2Se-TJ-Axw" id="4K4-QQ-mx4"/>
                                 </connections>
                             </tableView>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Lemon, Cheese, sausages, ..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="K5Z-RA-EXq">
-                                <rect key="frame" x="39" y="106.5" width="184" height="17"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Lemon, Cheese, Sausages, ..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="K5Z-RA-EXq">
+                                <rect key="frame" x="39" y="109" width="184" height="17"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="184" id="FPl-FW-hoH"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="words" keyboardType="namePhonePad" keyboardAppearance="light"/>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What's in your fridge ?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c5a-7d-NjR">
-                                <rect key="frame" x="101.5" y="38" width="193.5" height="24"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="K7j-hh-poh">
                                 <rect key="frame" x="-2" y="602" width="418" height="123"/>
                                 <subviews>
@@ -142,8 +136,8 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your ingredients: " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gv6-kJ-QXa">
-                                        <rect key="frame" x="43" y="18" width="133.5" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <rect key="frame" x="43" y="18" width="178" height="21.5"/>
+                                        <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="17"/>
                                         <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -157,10 +151,16 @@
                                     <constraint firstItem="Ff7-zP-2UP" firstAttribute="centerY" secondItem="x5V-mX-bcf" secondAttribute="centerY" constant="-3.5" id="sEd-AM-g0z"/>
                                 </constraints>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What's in your fridge ?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c5a-7d-NjR">
+                                <rect key="frame" x="102" y="37" width="211.5" height="26.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="c5a-7d-NjR" firstAttribute="top" secondItem="Gjn-WN-gRb" secondAttribute="top" constant="38" id="2oA-y0-n2o"/>
+                            <constraint firstItem="c5a-7d-NjR" firstAttribute="top" secondItem="Gjn-WN-gRb" secondAttribute="top" constant="37" id="2oA-y0-n2o"/>
                             <constraint firstItem="Pkl-ic-oBm" firstAttribute="leading" secondItem="Gjn-WN-gRb" secondAttribute="leading" id="6xA-sE-cMQ"/>
                             <constraint firstItem="7as-jS-r18" firstAttribute="top" secondItem="Gjn-WN-gRb" secondAttribute="top" constant="102" id="7Ci-sq-y8i"/>
                             <constraint firstItem="7as-jS-r18" firstAttribute="trailing" secondItem="J3H-2A-LF8" secondAttribute="trailingMargin" id="7s0-Hc-2BM"/>
@@ -169,10 +169,10 @@
                             <constraint firstItem="Pkl-ic-oBm" firstAttribute="top" secondItem="x5V-mX-bcf" secondAttribute="bottom" constant="-5" id="Ce9-Vw-AU5"/>
                             <constraint firstItem="Pkl-ic-oBm" firstAttribute="top" secondItem="x5V-mX-bcf" secondAttribute="bottom" constant="-5" id="NOd-ge-6EA"/>
                             <constraint firstItem="K7j-hh-poh" firstAttribute="bottom" secondItem="Gjn-WN-gRb" secondAttribute="bottom" id="Oua-ZW-6Qv"/>
-                            <constraint firstItem="K5Z-RA-EXq" firstAttribute="top" secondItem="c5a-7d-NjR" secondAttribute="bottom" constant="44.5" id="PVJ-OK-8sL"/>
+                            <constraint firstItem="K5Z-RA-EXq" firstAttribute="top" secondItem="c5a-7d-NjR" secondAttribute="bottom" constant="45.5" id="PVJ-OK-8sL"/>
                             <constraint firstItem="x5V-mX-bcf" firstAttribute="leading" secondItem="K7j-hh-poh" secondAttribute="leading" constant="1" id="SlV-JN-2ze"/>
                             <constraint firstItem="7as-jS-r18" firstAttribute="firstBaseline" secondItem="K5Z-RA-EXq" secondAttribute="baseline" constant="6" id="UGi-vZ-x42"/>
-                            <constraint firstItem="Gjn-WN-gRb" firstAttribute="trailing" secondItem="c5a-7d-NjR" secondAttribute="trailing" constant="119" id="Xfv-zv-1dJ"/>
+                            <constraint firstItem="Gjn-WN-gRb" firstAttribute="trailing" secondItem="c5a-7d-NjR" secondAttribute="trailing" constant="100.5" id="Xfv-zv-1dJ"/>
                             <constraint firstItem="7as-jS-r18" firstAttribute="leading" secondItem="K5Z-RA-EXq" secondAttribute="trailing" constant="91" id="jt9-Jg-lma"/>
                             <constraint firstItem="x5V-mX-bcf" firstAttribute="top" secondItem="7as-jS-r18" secondAttribute="bottom" constant="14" id="kLF-a6-TD6"/>
                             <constraint firstItem="Pkl-ic-oBm" firstAttribute="bottom" secondItem="Gjn-WN-gRb" secondAttribute="bottom" constant="-122" id="nHE-oc-e4U"/>
