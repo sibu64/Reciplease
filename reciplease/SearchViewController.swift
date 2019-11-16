@@ -23,6 +23,7 @@ class SearchViewController: UIViewController, UITableViewDelegate  {
     var model: Welcome?
     
     
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         //self.tabBarController.setupTabBarSeparators()
@@ -61,13 +62,11 @@ class SearchViewController: UIViewController, UITableViewDelegate  {
 //            self.textField.text = error.localizedDescription
 //        }else if let json = json {
 //            self.textField.text = json.description
-//            //self.model = try? JSONDecoder().decode(Base.self, from: recipes!)
-//            }
+        //self.recipes = try? JSONDecoder().decode([Recipe].self, from: )
         
             self.performSegue(withIdentifier: "RecipeSegue", sender: self)
         
         //self.model = try JSONDecoder().decode([Recipe].self)
-       
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

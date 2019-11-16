@@ -64,7 +64,7 @@ extension Welcome {
 
 // MARK: - Hit
 struct Hit: Codable {
-    let recipe: Recipe
+    var recipe: Recipe
     let bookmarked, bought: Bool
 }
 
@@ -110,7 +110,7 @@ extension Hit {
 // MARK: - Recipe
 struct Recipe: Codable {
     let uri: String
-    let label: String
+    var label: String
     let image: String
     let source: String
     let url, shareAs: String
@@ -439,14 +439,10 @@ func newJSONEncoder() -> JSONEncoder {
 
 // MARK: - Encode/decode helpers
 
-class JSONNull: Codable, Hashable {
+class JSONNull: Codable {
 
     public static func == (lhs: JSONNull, rhs: JSONNull) -> Bool {
         return true
-    }
-
-    public var hashValue: Int {
-        return 0
     }
 
     public init() {}
