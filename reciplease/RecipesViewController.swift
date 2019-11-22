@@ -9,7 +9,37 @@
 import UIKit
 
 class RecipesViewController: UIViewController, UITableViewDelegate {
-var recipe: [Recipe]?
+    // ***********************************************
+    // MARK: - Interface
+    // ***********************************************
+    private let apiIngredients = APIIngredients()
+    var ingredients: [String]?
+    var recipes: [Recipe]?
+    weak var tableView: UITableView!
+    // ***********************************************
+    // MARK: - Implementation
+    // ***********************************************
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        load()
+    }
+    
+    private func load() {
+        guard let values = ingredients else { return }
+        apiIngredients.execute(values) { recipes in
+            for recipe in recipes {
+                print("\(recipe.label) | \(recipe.image) | \(recipe.totalTime)| \(recipe.ingredientLines)")
+            }
+        }
+    }
+    
+//    func toggleCells() {
+//        DispatchQueue.main.async {
+//           self.tableView?.reloadData()
+//           }
+//    }
+    
 }
    
     
@@ -22,10 +52,10 @@ var recipe: [Recipe]?
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "RecipeViewCell", for: indexPath) as? RecipeViewCell {
-            let recipe = RecipeService.shared.recipes[indexPath.row]
+            let recipe = recipes![indexPath.row]
         
             cell.recipeLabel.text = recipe.label
-            print("nom du label:\(recipe.label)")
+            //print("nom du label:\(recipe.label)")
 
             return cell
         
@@ -38,7 +68,7 @@ var recipe: [Recipe]?
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return self.recipes!.count
     }
 }
 

@@ -9,15 +9,26 @@
 import Foundation
 import Alamofire
 
-class APIIngredients: Decodable {
+class APIIngredients {
     func execute(_ ingredients: [String], completion: @escaping (([Recipe]) -> ())) {
         do {
             let request = try Router.search(ingredients: ingredients).asURLRequest()
             Alamofire.request(request).responseJSON { response in
-            print(response)
+                if let responseData = response.data{
+                   let decoder = JSONDecoder()
+                    do {
+                        let model = try decoder.decode(Welcome.self, from: responseData)
+                        let recipes = model.hits.map { $0.recipe }
+                        completion(recipes)
+                    } catch let error {
+                        print(error.localizedDescription)
+                    }
+                }
+            //print(response)
             }
         } catch {
             print("Error:\(error)")
         }
     }
 }
+

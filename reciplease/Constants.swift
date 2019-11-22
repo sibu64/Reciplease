@@ -9,7 +9,7 @@
 import Foundation
 
 struct Constants {
-    static var app_key = "53f7376ae74f62ffa5beffdb4332a83f"
-    static var app_id = "6a8405b5"
+    static var app_key = "40698503668e0bb3897581f4766d77f9"//"c07c5ef25af35772ea08d994177b89e0"
+    static var app_id =  "900da95e"//"cc915c2d"
 }
 
