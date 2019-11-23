@@ -102,3 +102,6 @@ func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     return true
    }
 }
+//for recipe in recipes {
+//    print("\(recipe.label) | \(recipe.image) | \(recipe.totalTime)| \(recipe.ingredientLines)")
+//}

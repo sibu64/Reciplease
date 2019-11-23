@@ -13,9 +13,10 @@ class RecipesViewController: UIViewController, UITableViewDelegate {
     // MARK: - Interface
     // ***********************************************
     private let apiIngredients = APIIngredients()
-    var ingredients: [String]?
-    var recipes: [Recipe]?
-    weak var tableView: UITableView!
+    var ingredients: [String]!
+    var recipes: [Recipe]!
+    var ingredientList: [Ingredient]!
+    @IBOutlet weak var tableView: UITableView!
     // ***********************************************
     // MARK: - Implementation
     // ***********************************************
@@ -28,22 +29,21 @@ class RecipesViewController: UIViewController, UITableViewDelegate {
     private func load() {
         guard let values = ingredients else { return }
         apiIngredients.execute(values) { recipes in
-            for recipe in recipes {
-                print("\(recipe.label) | \(recipe.image) | \(recipe.totalTime)| \(recipe.ingredientLines)")
-            }
+            self.recipes = recipes
+            self.toggleCells()
         }
     }
     
-//    func toggleCells() {
-//        DispatchQueue.main.async {
-//           self.tableView?.reloadData()
-//           }
-//    }
+    func toggleCells() {
+        DispatchQueue.main.async {
+           self.tableView?.reloadData()
+            // exemple pour didSelect() : var pastaSalad = self.recipes[indexpath.row]
+           }
+    }
     
 }
+
    
-    
-    
     
     
     
@@ -52,11 +52,25 @@ class RecipesViewController: UIViewController, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "RecipeViewCell", for: indexPath) as? RecipeViewCell {
-            let recipe = recipes![indexPath.row]
+            _ = recipes[indexPath.row]
         
-            cell.recipeLabel.text = recipe.label
-            //print("nom du label:\(recipe.label)")
-
+            cell.recipeLabel.text = recipes[indexPath.row].label
+            
+            if let imageURL = URL(string:recipes[indexPath.row].image) {
+                           DispatchQueue.global().async {
+                               let data = try? Data(contentsOf: imageURL)
+                               if let data = data {
+                                   let image = UIImage(data: data)
+                                   DispatchQueue.main.async {
+                                       cell.recipeImage.image = image
+                                   }
+                               }
+                           }
+                       }
+       //let stringRepresentation = "-".join(array) // "1-2-3"
+            if cell.recipeIngredients.text != nil {
+                cell.recipeIngredients.text =  recipes[indexPath.row].ingredients.map { $0.food }.joined(separator: ", ")
+            }
             return cell
         
         } else {
@@ -68,7 +82,7 @@ class RecipesViewController: UIViewController, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.recipes!.count
+        return recipes?.count ?? 0
     }
 }
 
