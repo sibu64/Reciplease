@@ -8,8 +8,8 @@ import Foundation
 // MARK: - Welcome(response)
 struct Welcome: Codable {
     let q: String
-    let from, to: Int
-    let params: Params
+    let from: Int
+    let to: Int
     let more: Bool
     let count: Int
     let hits: [Hit]
@@ -37,7 +37,6 @@ extension Welcome {
         q: String? = nil,
         from: Int? = nil,
         to: Int? = nil,
-        params: Params? = nil,
         more: Bool? = nil,
         count: Int? = nil,
         hits: [Hit]? = nil
@@ -46,7 +45,6 @@ extension Welcome {
             q: q ?? self.q,
             from: from ?? self.from,
             to: to ?? self.to,
-            params: params ?? self.params,
             more: more ?? self.more,
             count: count ?? self.count,
             hits: hits ?? self.hits
@@ -64,7 +62,7 @@ extension Welcome {
 
 // MARK: - Hit
 struct Hit: Codable {
-    let recipe: Recipe
+    var recipe: Recipe
     let bookmarked, bought: Bool
 }
 
@@ -110,7 +108,7 @@ extension Hit {
 // MARK: - Recipe
 struct Recipe: Codable {
     let uri: String
-    let label: String
+    var label: String
     let image: String
     let source: String
     let url, shareAs: String
@@ -119,6 +117,7 @@ struct Recipe: Codable {
     let ingredients: [Ingredient]
     let calories, totalWeight: Double
     let totalNutrients, totalDaily: [String: Total]
+    let totalTime: Double
     let digest: [Digest]
 }
 
@@ -157,6 +156,7 @@ extension Recipe {
         totalWeight: Double? = nil,
         totalNutrients: [String: Total]? = nil,
         totalDaily: [String: Total]? = nil,
+        totalTime: Double? = nil,
         digest: [Digest]? = nil
     ) -> Recipe {
         return Recipe(
@@ -176,6 +176,7 @@ extension Recipe {
             totalWeight: totalWeight ?? self.totalWeight,
             totalNutrients: totalNutrients ?? self.totalNutrients,
             totalDaily: totalDaily ?? self.totalDaily,
+            totalTime: totalTime ?? self.totalTime,
             digest: digest ?? self.digest
         )
     }
@@ -439,14 +440,10 @@ func newJSONEncoder() -> JSONEncoder {
 
 // MARK: - Encode/decode helpers
 
-class JSONNull: Codable, Hashable {
+class JSONNull: Codable {
 
     public static func == (lhs: JSONNull, rhs: JSONNull) -> Bool {
         return true
-    }
-
-    public var hashValue: Int {
-        return 0
     }
 
     public init() {}

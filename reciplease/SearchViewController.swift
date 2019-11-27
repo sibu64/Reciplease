@@ -19,9 +19,7 @@ class SearchViewController: UIViewController, UITableViewDelegate  {
     
     var ingredients: [String] = []
     var recipes: [Recipe]? = []
-    var apiIngredients = APIIngredients()
     var model: Welcome?
-    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -48,39 +46,15 @@ class SearchViewController: UIViewController, UITableViewDelegate  {
     }
     
     @IBAction func searchRecipes(_ sender: UIButton) {
-       //appel réseau
-        guard !ingredients.isEmpty else {
-            return
-        }
-        apiIngredients.execute(ingredients) { recipes in
-            print(recipes)
-        }
-//        apiIngredients.execute(ingredients){ (json,error) in
-//            //print(json)
-//        if let error = error{
-//            self.textField.text = error.localizedDescription
-//        }else if let json = json {
-//            self.textField.text = json.description
-//            //self.model = try? JSONDecoder().decode(Base.self, from: recipes!)
-//            }
-        
-            self.performSegue(withIdentifier: "RecipeSegue", sender: self)
-        
-        //self.model = try JSONDecoder().decode([Recipe].self)
-       
+        guard !ingredients.isEmpty else { return }
+        self.performSegue(withIdentifier: "RecipeSegue", sender: self)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "RecipeSegue" {
-            if let searchRecipes = recipes {
-                if let nextScreen = segue.destination as? RecipesViewController {
-                    nextScreen.recipe = searchRecipes
-                    //let vc: RecipesViewController = RecipesViewController()
-                    //self.present(vc, animated: true, completion: nil)
-                }
-            }
-
-       }
+            let controller = segue.destination as? RecipesViewController
+            controller?.ingredients = self.ingredients
+        }
    }
 }
 extension SearchViewController: UITableViewDataSource {
@@ -128,3 +102,6 @@ func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     return true
    }
 }
+//for recipe in recipes {
+//    print("\(recipe.label) | \(recipe.image) | \(recipe.totalTime)| \(recipe.ingredientLines)")
+//}
