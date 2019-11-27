@@ -19,7 +19,6 @@ class RecipesViewController: UIViewController, UITableViewDelegate {
     var ingredientList: [Ingredient]!
     @IBOutlet weak var tableView: UITableView!
     let viewCell =  RecipeViewCell()
-    var gradientLayer: CAGradientLayer!
     // ***********************************************
     // MARK: - Implementation
     // ***********************************************
@@ -27,15 +26,7 @@ class RecipesViewController: UIViewController, UITableViewDelegate {
         super.viewDidLoad()
         load()
     }
-   
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//    }
-
-    override func viewWillAppear(_ animated: Bool){
-        super.viewDidAppear(animated)
-       // self.createGradientLayer()
-    }
+    
     private func load() {
         guard let values = ingredients else { return }
         apiIngredients.execute(values) { recipes in
@@ -79,8 +70,11 @@ class RecipesViewController: UIViewController, UITableViewDelegate {
             cell.totalTime.text = String(Int(recipes[indexPath.row].totalTime))+" min"
             
             cell.rating.text = String(recipes[indexPath.row].yield)
-           
+            
+            if cell.gradientLayer == nil{
             cell.createGradientLayer()
+            }
+            
             return cell
         
         } else {
