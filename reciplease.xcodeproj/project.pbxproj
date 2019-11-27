@@ -135,20 +135,17 @@
 		6E3F526A2358EBBC00B0A634 /* reciplease */ = {
 			isa = PBXGroup;
 			children = (
+				6EE3955C238EA14600481A5C /* Model */,
+				6EE3955D238EA16500481A5C /* View */,
+				6EE3955B238EA0FA00481A5C /* Controller */,
 				6EE5193A2369CD1100D0C732 /* RecipeSegue copy.swift */,
 				6E3F526B2358EBBC00B0A634 /* AppDelegate.swift */,
 				6E3F526D2358EBBC00B0A634 /* SceneDelegate.swift */,
-				6E3F526F2358EBBC00B0A634 /* SearchViewController.swift */,
-				6E76BB7B23673C3B00DA9191 /* RecipesViewController.swift */,
 				6ECDCDED23687204000C395C /* APIIngredients.swift */,
 				6E294D33237AEF7F00E1C384 /* Router.swift */,
 				6E172B6C236C98070021A00F /* RecipeService.swift */,
 				6EA992A12366DEA800C3B169 /* Search.json */,
-				6EA992A32366E10000C3B169 /* Recipe.swift */,
 				6EE2DD382365C46100D0D26E /* MyTabBarController.swift */,
-				6E0A85312360868D0057F1D6 /* IngredientViewCell.swift */,
-				6EAB878D236ADD1500C5A2E2 /* RecipeViewCell.swift */,
-				6E3F52712358EBBC00B0A634 /* Main.storyboard */,
 				6E2F6836235EED990042C476 /* Constants.swift */,
 				6E3F52772358EBBE00B0A634 /* Assets.xcassets */,
 				6E3F52792358EBBE00B0A634 /* LaunchScreen.storyboard */,
@@ -165,6 +162,33 @@
 				6E3F52872358EBBE00B0A634 /* Info.plist */,
 			);
 			path = recipleaseTests;
+			sourceTree = "<group>";
+		};
+		6EE3955B238EA0FA00481A5C /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				6E3F526F2358EBBC00B0A634 /* SearchViewController.swift */,
+				6E76BB7B23673C3B00DA9191 /* RecipesViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		6EE3955C238EA14600481A5C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				6EA992A32366E10000C3B169 /* Recipe.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		6EE3955D238EA16500481A5C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				6E3F52712358EBBC00B0A634 /* Main.storyboard */,
+				6E0A85312360868D0057F1D6 /* IngredientViewCell.swift */,
+				6EAB878D236ADD1500C5A2E2 /* RecipeViewCell.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

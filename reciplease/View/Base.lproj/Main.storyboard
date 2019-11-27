@@ -12,7 +12,7 @@
             <objects>
                 <viewController id="43i-qb-xL6" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="3iB-hR-7jr">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="63q-1Y-FzK"/>
@@ -24,7 +24,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rfg-06-zAx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3526.0869565217395" y="396.42857142857139"/>
+            <point key="canvasLocation" x="3526" y="396"/>
         </scene>
         <!--Reciplease-->
         <scene sceneID="Up8-pZ-Qoa">
@@ -229,14 +229,6 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="150"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ElW-rx-Ym2">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="150"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" secondItem="ElW-rx-Ym2" secondAttribute="height" multiplier="25:8" constant="-93.75" id="73U-ui-E5r"/>
-                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="120" id="QDh-H0-5Pl"/>
-                                                        <constraint firstAttribute="height" constant="150" id="Whk-UG-146"/>
-                                                    </constraints>
-                                                </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Du-9D-F3O">
                                                     <rect key="frame" x="29" y="45" width="282" height="35.5"/>
                                                     <constraints>
@@ -308,6 +300,18 @@
                                                         <constraint firstAttribute="trailing" secondItem="gdC-Ly-bO4" secondAttribute="trailing" constant="7" id="vzh-my-7ar"/>
                                                     </constraints>
                                                 </view>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ElW-rx-Ym2">
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="150"/>
+                                                    <gestureRecognizers/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="ElW-rx-Ym2" secondAttribute="height" multiplier="25:8" constant="-93.75" id="73U-ui-E5r"/>
+                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="120" id="QDh-H0-5Pl"/>
+                                                        <constraint firstAttribute="height" constant="150" id="Whk-UG-146"/>
+                                                    </constraints>
+                                                    <connections>
+                                                        <outletCollection property="gestureRecognizers" destination="XjV-aG-qek" appends="YES" id="JVI-6g-Huu"/>
+                                                    </connections>
+                                                </imageView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="7Du-9D-F3O" firstAttribute="top" secondItem="3wV-gs-aa9" secondAttribute="topMargin" constant="34" id="8Ah-aZ-nWr"/>
@@ -356,8 +360,9 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1nK-KB-kI8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="XjV-aG-qek"/>
             </objects>
-            <point key="canvasLocation" x="4615.1999999999998" y="-747.9760119940031"/>
+            <point key="canvasLocation" x="4527" y="-748"/>
         </scene>
         <!--My Tab Bar Controller-->
         <scene sceneID="5Ee-Y8-FAL">
@@ -399,7 +404,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="43i-qb-xL6" kind="relationship" relationship="rootViewController" id="8c7-qe-GXE"/>
+                        <segue destination="43i-qb-xL6" kind="show" identifier="FavoriteSegue" id="NRb-Qq-MgB"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lfF-7U-1QH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

@@ -25,7 +25,7 @@ class RecipeViewCell: UITableViewCell {
         gradientLayer.frame = self.bounds
     }
     
-func createGradientLayer() {
+    func createGradientLayer() {
         gradientLayer = CAGradientLayer()
         gradientLayer.colors = [UIColor.clear.cgColor, UIColor.black.cgColor]
         gradientLayer.startPoint = CGPoint(x: 1.0, y: 0.0)
