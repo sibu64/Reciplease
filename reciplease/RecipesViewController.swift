@@ -9,6 +9,7 @@
 import UIKit
 
 class RecipesViewController: UIViewController, UITableViewDelegate {
+    
     // ***********************************************
     // MARK: - Interface
     // ***********************************************
@@ -17,15 +18,24 @@ class RecipesViewController: UIViewController, UITableViewDelegate {
     var recipes: [Recipe]!
     var ingredientList: [Ingredient]!
     @IBOutlet weak var tableView: UITableView!
+    let viewCell =  RecipeViewCell()
+    var gradientLayer: CAGradientLayer!
     // ***********************************************
     // MARK: - Implementation
     // ***********************************************
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         load()
     }
-    
+   
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//    }
+
+    override func viewWillAppear(_ animated: Bool){
+        super.viewDidAppear(animated)
+       // self.createGradientLayer()
+    }
     private func load() {
         guard let values = ingredients else { return }
         apiIngredients.execute(values) { recipes in
@@ -41,13 +51,8 @@ class RecipesViewController: UIViewController, UITableViewDelegate {
            }
     }
     
-}
 
-   
-    
-    
-    
-    
+}
  extension RecipesViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -67,10 +72,15 @@ class RecipesViewController: UIViewController, UITableViewDelegate {
                                }
                            }
                        }
-       //let stringRepresentation = "-".join(array) // "1-2-3"
+            
             if cell.recipeIngredients.text != nil {
                 cell.recipeIngredients.text =  recipes[indexPath.row].ingredients.map { $0.food }.joined(separator: ", ")
             }
+            cell.totalTime.text = String(Int(recipes[indexPath.row].totalTime))+" min"
+            
+            cell.rating.text = String(recipes[indexPath.row].yield)
+           
+            cell.createGradientLayer()
             return cell
         
         } else {
