@@ -18,7 +18,6 @@ class SearchViewController: UIViewController, UITableViewDelegate  {
     @IBOutlet weak var searchButton: UIButton!
     
     var ingredients: [String] = []
-    var recipes: [Recipe]? = []
     var model: Welcome?
     
     override func viewWillAppear(_ animated: Bool) {
