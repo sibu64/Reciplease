@@ -18,7 +18,6 @@ class SearchViewController: UIViewController, UITableViewDelegate  {
     @IBOutlet weak var searchButton: UIButton!
     
     var ingredients: [String] = []
-    var recipes: [Recipe]? = []
     var model: Welcome?
     
     override func viewWillAppear(_ animated: Bool) {
@@ -102,6 +101,4 @@ func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     return true
    }
 }
-//for recipe in recipes {
-//    print("\(recipe.label) | \(recipe.image) | \(recipe.totalTime)| \(recipe.ingredientLines)")
-//}
+
