@@ -7,7 +7,7 @@
 //
 import UIKit
 
-class RecipesViewController: UIViewController, UITableViewDelegate {
+class RecipesViewController: UIViewController, UITableViewDelegate, ActivityIndicatorPresenter {
     
     // ***********************************************
     // MARK: - Interface
@@ -20,6 +20,7 @@ class RecipesViewController: UIViewController, UITableViewDelegate {
     var gradientLayer: CAGradientLayer!
     var detail: DetailViewController!
     var recipe: Recipe?
+    let activityIndicator = UIActivityIndicatorView()
     // ***********************************************
     // MARK: - Implementation
     // ***********************************************
@@ -30,10 +31,12 @@ class RecipesViewController: UIViewController, UITableViewDelegate {
     }
     
     private func load() {
+        showActivityIndicator()
         guard let values = ingredients else { return }
         apiIngredients.execute(values) { recipes in
             self.recipes = recipes
             self.toggleCells()
+            self.hideActivityIndicator()
         }
     }
     
@@ -93,8 +96,6 @@ extension RecipesViewController: UITableViewDataSource {
             if cell.gradientLayer == nil {
                 _ =  cell.recipeImage.image
                cell.createGradientLayer()
-//                cell.viewForLayer?.createGradientLayer()
-//                cell.viewForLayer?.layer.insertSublayer(gradientLayer, above: cell.recipeImage.layer)
             }
             
             return cell

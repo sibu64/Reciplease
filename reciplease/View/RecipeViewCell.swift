@@ -32,17 +32,3 @@ class RecipeViewCell: UITableViewCell {
         self.viewForLayer?.layer.insertSublayer(gradientLayer, above: self.recipeImage.layer)
     }
 }
-
-//class GradientView: UIView {
-//
-//
-//    override class func awakeFromNib() {
-//        super.awakeFromNib()
-//        let gradientLayer = CAGradientLayer()
-//        gradientLayer.colors = [UIColor.clear.cgColor, UIColor.black.cgColor]
-//        gradientLayer.startPoint = CGPoint(x: 1.0, y: 0.0)
-//        gradientLayer.endPoint = CGPoint(x: 1.0, y: 1.0)
-//        alpha = 0.50
-//        self.viewForLayer.layer.insertSublayer(gradientLayer, above: self.recipeImage.layer)
-//    }
-//}
