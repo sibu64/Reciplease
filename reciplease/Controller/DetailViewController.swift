@@ -7,25 +7,25 @@
 //
 
 import UIKit
+import CoreData
 
 class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-
+    // ***********************************************
+    // MARK: - Interface
+    // ***********************************************
     @IBOutlet weak var recipeLabel: UILabel!
     @IBOutlet weak var ingredientsTableView: UITableView!
     @IBOutlet weak var recipeImage: UIImageView!
     @IBOutlet weak var totalTime: UILabel!
-    @IBOutlet weak var rating: UILabel!
-    @IBOutlet weak var gradientView: GradientView!
     @IBOutlet weak var buttonView: UIView!
-    @IBOutlet weak var getDirections: UIButton!
-    
-    
-    
+    @IBOutlet weak var favIcon: UIBarButtonItem!
+    // Properties
     var recipe: Recipe?
-    var selectedIngredients: String?
     var currentIngredientViewCell: CurrentIngredientViewCell?
-    
-    
+    let model = FavoriteRecipe(context: AppDelegate.viewContext)
+    // ***********************************************
+    // MARK: - Implementation
+    // ***********************************************
     override func loadView() {
         super.loadView()
         ingredientsTableView.delegate = self
@@ -35,18 +35,32 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     override func viewDidLoad() {
         super.viewDidLoad()
         recipeLabel.text = recipe?.label
-        //print(recipe)
-        selectedIngredients = "-" + (recipe?.ingredientLines.joined(separator:"\n") ?? "no ingredient")
         totalTime.text = String(Int(recipe?.totalTime ?? 0.0)) + " min"
-        rating.text = String(recipe!.yield)
+        
         loadPicture()
-    }
+        
+        if model.isFavorite == true {
+            changeAppearanceForFavorite(isFavorite: true)
+        } else {
+            changeAppearanceForFavorite(isFavorite: false)
+        }
+   }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.ingredientsTableView.reloadData()
     }
     
+    func changeAppearanceForFavorite(isFavorite: Bool) {
+        if isFavorite == true {
+            favIcon.tintColor = .green
+        } else {
+            favIcon.tintColor = .white
+        }
+    }
+    // ***********************************************
+    // MARK: - Actions
+    // ***********************************************
     @IBAction func btnClicked(_ sender: UIButton) {
         guard let urlString = recipe?.url else { return }
         
@@ -55,14 +69,36 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
     }
     
+    @IBAction func favClicked(_ sender: UIBarButtonItem) {
+        if model.isFavorite == false {
+            changeAppearanceForFavorite(isFavorite: true)
+            saveFavoriteRecipe(called: recipe?.url ?? "No url", isFavorite: true)
+        } else {
+            changeAppearanceForFavorite(isFavorite: false)
+        }
+    }
+    // ***********************************************
+    // MARK: - Private Methods
+    // ***********************************************
+    private func saveFavoriteRecipe(called identifyer: String, isFavorite: Bool) {
+        //let model = FavoriteRecipe(context: AppDelegate.viewContext)
+        model.name = recipe?.label
+        model.identifyer = recipe?.uri
+        model.isFavorite = true
+        model.imageUrlString = recipe?.image
+        model.totalTime = recipe?.totalTime ?? 0
+        (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
+    }
+    
     // ***********************************************
     // MARK: - TABLEVIEWS
     // ***********************************************
     
     internal func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
             let cell: CurrentIngredientViewCell = ingredientsTableView.dequeueReusableCell(withIdentifier: "CurrentIngredientViewCell", for:indexPath) as! CurrentIngredientViewCell
-            let ingredient = self.recipe?.ingredients[indexPath.row].food
+            let ingredient = self.recipe?.ingredients?[indexPath.row].food
             cell.nameLabel?.text = ingredient
+
             return cell
     }
 
@@ -72,7 +108,7 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return recipe?.ingredients.count ?? 0
+        return recipe?.ingredients?.count ?? 0
     }
     
     
@@ -81,7 +117,6 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     // ***********************************************
     
     private func loadPicture() {
-        //let gradientLayer: CAGradientLayer! = CAGradientLayer()
         if let imageURL = URL(string:recipe!.image) {
             DispatchQueue.global().async {
                 let data = try? Data(contentsOf: imageURL)
@@ -93,5 +128,5 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 }
             }
         }
-}
+    }
 }

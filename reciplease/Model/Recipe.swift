@@ -110,15 +110,12 @@ struct Recipe: Codable {
     let uri: String
     var label: String
     let image: String
-    let source: String
-    let url, shareAs: String
+    let url: String
     let yield: Int
-    let dietLabels, healthLabels, cautions, ingredientLines: [String]
-    let ingredients: [Ingredient]
-    let calories, totalWeight: Double
-    let totalNutrients, totalDaily: [String: Total]
+    let ingredientLines: [String]
+    let ingredients: [Ingredient]?
     let totalTime: Double
-    let digest: [Digest]
+    //var isFavorite: Bool? = false
 }
 
 // MARK: Recipe convenience initializers and mutators
@@ -126,6 +123,18 @@ struct Recipe: Codable {
 extension Recipe {
     init(data: Data) throws {
         self = try newJSONDecoder().decode(Recipe.self, from: data)
+    }
+    
+    init(with favoriteRecipe: FavoriteRecipe) {
+        self.uri = favoriteRecipe.identifyer ?? ""
+        self.label = favoriteRecipe.name ?? ""
+        self.image = favoriteRecipe.imageUrlString ?? ""
+        self.url = ""
+        self.yield = 0
+        self.ingredientLines = [""]
+        self.ingredients = nil
+        self.totalTime = 0.0
+       // self.isFavorite = favoriteRecipe.isFavorite
     }
 
     init(_ json: String, using encoding: String.Encoding = .utf8) throws {
@@ -143,41 +152,23 @@ extension Recipe {
         uri: String? = nil,
         label: String? = nil,
         image: String? = nil,
-        source: String? = nil,
         url: String? = nil,
-        shareAs: String? = nil,
         yield: Int? = nil,
-        dietLabels: [String]? = nil,
-        healthLabels: [String]? = nil,
-        cautions: [String]? = nil,
         ingredientLines: [String]? = nil,
         ingredients: [Ingredient]? = nil,
-        calories: Double? = nil,
-        totalWeight: Double? = nil,
-        totalNutrients: [String: Total]? = nil,
-        totalDaily: [String: Total]? = nil,
-        totalTime: Double? = nil,
-        digest: [Digest]? = nil
+        totalTime: Double? = nil
+       // isFavorite: Bool? = nil
     ) -> Recipe {
         return Recipe(
             uri: uri ?? self.uri,
             label: label ?? self.label,
             image: image ?? self.image,
-            source: source ?? self.source,
             url: url ?? self.url,
-            shareAs: shareAs ?? self.shareAs,
             yield: yield ?? self.yield,
-            dietLabels: dietLabels ?? self.dietLabels,
-            healthLabels: healthLabels ?? self.healthLabels,
-            cautions: cautions ?? self.cautions,
             ingredientLines: ingredientLines ?? self.ingredientLines,
             ingredients: ingredients ?? self.ingredients,
-            calories: calories ?? self.calories,
-            totalWeight: totalWeight ?? self.totalWeight,
-            totalNutrients: totalNutrients ?? self.totalNutrients,
-            totalDaily: totalDaily ?? self.totalDaily,
-            totalTime: totalTime ?? self.totalTime,
-            digest: digest ?? self.digest
+            totalTime: totalTime ?? self.totalTime
+           // isFavorite: isFavorite ?? self.isFavorite
         )
     }
 

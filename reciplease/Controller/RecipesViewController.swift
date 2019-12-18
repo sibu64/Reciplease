@@ -6,52 +6,43 @@
 //  Copyright © 2019 Darrieumerlou. All rights reserved.
 //
 import UIKit
+import CoreData
 
-class RecipesViewController: UIViewController, UITableViewDelegate, ActivityIndicatorPresenter {
+class RecipesViewController: UIViewController, UITableViewDelegate {
     
     // ***********************************************
     // MARK: - Interface
     // ***********************************************
-    private let apiIngredients = APIIngredients()
-    var ingredients: [String]!
-    var recipes: [Recipe]!
     @IBOutlet weak var tableView: UITableView!
+    // Properties
     let viewCell =  RecipeViewCell()
-    var gradientLayer: CAGradientLayer!
-    var detail: DetailViewController!
-    var recipe: Recipe?
-    let activityIndicator = UIActivityIndicatorView()
+    private var gradientLayer: CAGradientLayer!
+    private var detail: DetailViewController!
+    private var recipe: Recipe?
+    private var ingredients: [String]!
+    internal var recipes: [Recipe]!
     // ***********************************************
     // MARK: - Implementation
     // ***********************************************
     override func viewDidLoad() {
         super.viewDidLoad()
-        load()
         self.navigationItem.setHidesBackButton(true, animated: false)
     }
     
-    private func load() {
-        showActivityIndicator()
-        guard let values = ingredients else { return }
-        apiIngredients.execute(values) { recipes in
-            self.recipes = recipes
-            self.toggleCells()
-            self.hideActivityIndicator()
-        }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.tableView?.reloadData()
     }
-    
-    func toggleCells() {
-        DispatchQueue.main.async {
-            self.tableView?.reloadData()
-            // exemple pour didSelect() : var pastaSalad = self.recipes[indexpath.row]
-        }
+        
+    func set(_ recipes: [Recipe], _ ingredients: [String]) {
+        self.recipes = recipes
+        self.ingredients = ingredients
     }
     
     func clickRecipe(_ sender: UIButton) {
         guard !recipes.isEmpty else { return }
         self.performSegue(withIdentifier: "DetailSegue", sender: self)
     }
-    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "DetailSegue" {
@@ -63,18 +54,17 @@ class RecipesViewController: UIViewController, UITableViewDelegate, ActivityIndi
             _ = segue.destination as? DetailViewController
         }
     }
-    
-    
 }
+
 extension RecipesViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "RecipeViewCell", for: indexPath) as? RecipeViewCell {
-            _ = recipes[indexPath.row]
+            let item = recipes[indexPath.row]
             
-            cell.recipeLabel.text = recipes[indexPath.row].label
+            cell.recipeLabel.text = item.label
             
-            if let imageURL = URL(string:recipes[indexPath.row].image) {
+            if let imageURL = URL(string: item.image) {
                 DispatchQueue.global().async {
                     let data = try? Data(contentsOf: imageURL)
                     if let data = data {
@@ -87,11 +77,11 @@ extension RecipesViewController: UITableViewDataSource {
             }
             
             if cell.recipeIngredients.text != nil {
-                cell.recipeIngredients.text =  recipes[indexPath.row].ingredients.map { $0.food }.joined(separator: ", ")
+                cell.recipeIngredients.text =  recipes[indexPath.row].ingredients?.map { $0.food }.joined(separator: ", ")
             }
             cell.totalTime.text = String(Int(recipes[indexPath.row].totalTime))+" min"
             
-            cell.rating.text = String(recipes[indexPath.row].yield)
+            //cell.rating.text = String(recipes[indexPath.row].yield)
             
             if cell.gradientLayer == nil {
                 _ =  cell.recipeImage.image
@@ -108,7 +98,6 @@ extension RecipesViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         recipe = self.recipes[indexPath.row]
         self.performSegue(withIdentifier: "DetailSegue", sender: self)
-        
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {

@@ -10,10 +10,16 @@ import Foundation
 import Alamofire
 
 class APIIngredients {
+    
+    private let manager: SessionManager
+    init(manager: SessionManager = SessionManager.default) {
+        self.manager = manager
+    }
+    
     func execute(_ ingredients: [String], completion: @escaping (([Recipe]) -> ())) {
         do {
             let request = try Router.search(ingredients: ingredients).asURLRequest()
-            Alamofire.request(request).responseJSON { response in
+            manager.request(request).responseJSON { response in
                 if let responseData = response.data{
                    let decoder = JSONDecoder()
                     do {
@@ -21,10 +27,10 @@ class APIIngredients {
                         let recipes = model.hits.map { $0.recipe }
                         completion(recipes)
                     } catch let error {
-                        print(error.localizedDescription)
+                        print(error)
                     }
                 }
-            //print(response)
+            //print("Error:\(error)")
             }
         } catch {
             print("Error:\(error)")

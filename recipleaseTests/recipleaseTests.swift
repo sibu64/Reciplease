@@ -7,28 +7,49 @@
 //
 
 import XCTest
+@testable import Alamofire
 @testable import reciplease
 
-class recipleaseTests: XCTestCase {
-
-    override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    final class APIIngredientsTest: XCTestCase {
+        
+        private var sut: APIIngredients!
+        
+        override func setUp() {
+            super.setUp()
+            
+            let manager: SessionManager = {
+                let configuration: URLSessionConfiguration = {
+                    let configuration = URLSessionConfiguration.default
+                    configuration.protocolClasses = [MockURLProtocol.self]
+                    return configuration
+                }()
+                
+                return SessionManager(configuration: configuration)
+            }()
+            //sut = APIIngredients(manager: manager)
         }
+        
+        override func tearDown() {
+            super.tearDown()
+            
+            sut = nil
+        }
+        
+        func testStatusCode200ReturnsStatusCode200() {
+            // given
+            MockURLProtocol.responseWithStatusCode(code: 200)
+            
+            let expectation = XCTestExpectation(description: "Performs a request")
+            
+            // when
+            sut.execute(["ingredients"]) { (result) in
+               // XCTAssertEqual((((result.response? as AnyObject))!).statusCode, 200)
+                expectation.fulfill()
+            }
+            
+            // then
+        wait(for: [expectation], timeout: 3)
     }
+
 
 }
