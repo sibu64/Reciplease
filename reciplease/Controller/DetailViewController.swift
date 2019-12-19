@@ -21,8 +21,10 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var favIcon: UIBarButtonItem!
     // Properties
     var recipe: Recipe?
+    var isFavorite: Bool = false
+    var indexPath: IndexPath?
     var currentIngredientViewCell: CurrentIngredientViewCell?
-    let model = FavoriteRecipe(context: AppDelegate.viewContext)
+    private var didDelete: ((IndexPath?)->Void)?
     // ***********************************************
     // MARK: - Implementation
     // ***********************************************
@@ -36,14 +38,9 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         super.viewDidLoad()
         recipeLabel.text = recipe?.label
         totalTime.text = String(Int(recipe?.totalTime ?? 0.0)) + " min"
-        
         loadPicture()
         
-        if model.isFavorite == true {
-            changeAppearanceForFavorite(isFavorite: true)
-        } else {
-            changeAppearanceForFavorite(isFavorite: false)
-        }
+        changeAppearanceForFavorite(isFavorite: isFavorite)
    }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -58,6 +55,10 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
             favIcon.tintColor = .white
         }
     }
+    
+    func didDelete(_ completion: ((IndexPath?)->Void)?) {
+        self.didDelete = completion
+    }
     // ***********************************************
     // MARK: - Actions
     // ***********************************************
@@ -70,18 +71,23 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     @IBAction func favClicked(_ sender: UIBarButtonItem) {
-        if model.isFavorite == false {
+        if isFavorite == false {
+            self.isFavorite = true
             changeAppearanceForFavorite(isFavorite: true)
-            saveFavoriteRecipe(called: recipe?.url ?? "No url", isFavorite: true)
+            saveFavoriteRecipe()
         } else {
+            deleteFavoriteRecipe()
             changeAppearanceForFavorite(isFavorite: false)
+            self.isFavorite = false
+            self.navigationController?.popViewController(animated: true)
+            self.didDelete?(indexPath)
         }
     }
     // ***********************************************
     // MARK: - Private Methods
     // ***********************************************
-    private func saveFavoriteRecipe(called identifyer: String, isFavorite: Bool) {
-        //let model = FavoriteRecipe(context: AppDelegate.viewContext)
+    private func saveFavoriteRecipe() {
+        let model = FavoriteRecipe(context: AppDelegate.viewContext)
         model.name = recipe?.label
         model.identifyer = recipe?.uri
         model.isFavorite = true
@@ -90,6 +96,20 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
     }
     
+    private func deleteFavoriteRecipe() {
+        let request: NSFetchRequest<FavoriteRecipe> = FavoriteRecipe.fetchRequest()
+        request.predicate = NSPredicate(format: "identifyer='\(recipe!.uri)'")
+        
+        do {
+            let favoriteRecipe = try AppDelegate.viewContext.fetch(request).first
+            if let value = favoriteRecipe {
+                AppDelegate.viewContext.delete(value)
+                (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
+            }
+        } catch let error {
+            print(error)
+        }
+    }
     // ***********************************************
     // MARK: - TABLEVIEWS
     // ***********************************************

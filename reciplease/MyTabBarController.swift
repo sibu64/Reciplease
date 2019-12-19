@@ -18,10 +18,7 @@ class MyTabBarController: UITabBarController {
     private var favoriteRecipes: [FavoriteRecipe] {
         return FavoriteRecipe.all
     }
-    /*private var recipeController: RecipesViewController? {
-        let navigation = children.last as? UINavigationController
-        return navigation?.children.first as? RecipesViewController
-    }*/
+    let model = FavoriteRecipe(context: AppDelegate.viewContext)
     // ***********************************************
     // MARK: - Implementation
     // ***********************************************
@@ -37,15 +34,6 @@ class MyTabBarController: UITabBarController {
         setupTabBarSeparators()
         barItemAppearance()
     }
-    // ***********************************************
-    // MARK: - Segue
-    // ***********************************************
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        print("COUCOU")
-//        if segue.identifier == "hello" {
-//
-//        }
-    //}
     // ***********************************************
     // MARK: - Segue
     // ***********************************************
@@ -92,6 +80,8 @@ extension MyTabBarController: UITabBarControllerDelegate {
         let navigation = viewController as? UINavigationController
         if let controller = navigation?.children.first as? RecipesViewController {
             controller.recipes = favoriteRecipes.map { Recipe(with: $0) }
+            controller.isFromFavorites = true
+            //controller.viewCell.totalTime.text = String(model.totalTime)
             
            if favoriteRecipes.isEmpty{
                 let alert = UIAlertController(title: "You don't have any favorite!", message: "You must click on the star to add a recipe to your favorite", preferredStyle: .alert)
@@ -101,23 +91,5 @@ extension MyTabBarController: UITabBarControllerDelegate {
                 self.present(alert, animated: true)
             }
         }
-//        if let controller = navigation?.children.last as? DetailViewController {
-//
-//            func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//                let cell: CurrentIngredientViewCell = controller.ingredientsTableView.dequeueReusableCell(withIdentifier: "CurrentIngredientViewCell", for:indexPath) as! CurrentIngredientViewCell
-//                let ingredient = controller.recipe?.ingredients?[indexPath.row].food
-//                controller.model.ingredients = ingredient
-//                return cell
-//        }
-//            func numberOfSections(in tableView: UITableView) -> Int {
-//                   return 1
-//               }
-//
-//               func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//                return controller.recipe?.ingredients?.count ?? 0
-//               }
-//
-//    }
-//}
-}
+    }
 }

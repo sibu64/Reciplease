@@ -21,6 +21,7 @@ class RecipesViewController: UIViewController, UITableViewDelegate {
     private var recipe: Recipe?
     private var ingredients: [String]!
     internal var recipes: [Recipe]!
+    var isFromFavorites: Bool = false
     // ***********************************************
     // MARK: - Implementation
     // ***********************************************
@@ -51,6 +52,13 @@ class RecipesViewController: UIViewController, UITableViewDelegate {
             }
             let controller = segue.destination as? DetailViewController
             controller?.recipe = recipe
+            controller?.isFavorite = isFromFavorites
+            controller?.indexPath = (sender as! IndexPath)
+            controller?.didDelete({ indexPath in
+                guard let value = indexPath else { return }
+                self.recipes.remove(at: value.row)
+                self.tableView.deleteRows(at: [value], with: .fade)
+            })
             _ = segue.destination as? DetailViewController
         }
     }
@@ -80,9 +88,7 @@ extension RecipesViewController: UITableViewDataSource {
                 cell.recipeIngredients.text =  recipes[indexPath.row].ingredients?.map { $0.food }.joined(separator: ", ")
             }
             cell.totalTime.text = String(Int(recipes[indexPath.row].totalTime))+" min"
-            
-            //cell.rating.text = String(recipes[indexPath.row].yield)
-            
+                        
             if cell.gradientLayer == nil {
                 _ =  cell.recipeImage.image
                cell.createGradientLayer()
@@ -97,7 +103,7 @@ extension RecipesViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         recipe = self.recipes[indexPath.row]
-        self.performSegue(withIdentifier: "DetailSegue", sender: self)
+        self.performSegue(withIdentifier: "DetailSegue", sender: indexPath)
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
