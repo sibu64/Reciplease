@@ -18,18 +18,10 @@ class MyTabBarController: UITabBarController {
     private var favoriteRecipes: [FavoriteRecipe] {
         return FavoriteRecipe.all
     }
-    /*private var recipeController: RecipesViewController? {
-        let navigation = children.last as? UINavigationController
-        return navigation?.children.first as? RecipesViewController
-    }*/
+    let model = FavoriteRecipe(context: AppDelegate.viewContext)
     // ***********************************************
     // MARK: - Implementation
     // ***********************************************
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,18 +29,7 @@ class MyTabBarController: UITabBarController {
         setupTabBarSeparators()
         barItemAppearance()
     }
-    // ***********************************************
-    // MARK: - Segue
-    // ***********************************************
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        print("COUCOU")
-//        if segue.identifier == "hello" {
-//
-//        }
-    //}
-    // ***********************************************
-    // MARK: - Segue
-    // ***********************************************
+    
     func setupTabBarSeparators() {
         
         let itemWidth = floor(self.myTabBar.frame.size.width / CGFloat(self.myTabBar.items!.count))
@@ -84,16 +65,16 @@ class MyTabBarController: UITabBarController {
     }
 }
 
-
-
 extension MyTabBarController: UITabBarControllerDelegate {
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
         
         let navigation = viewController as? UINavigationController
         if let controller = navigation?.children.first as? RecipesViewController {
             controller.recipes = favoriteRecipes.map { Recipe(with: $0) }
+            controller.isFromFavorites = true
             
-           if favoriteRecipes.isEmpty{
+            if favoriteRecipes.isEmpty {
+                controller.tableView?.reloadData()
                 let alert = UIAlertController(title: "You don't have any favorite!", message: "You must click on the star to add a recipe to your favorite", preferredStyle: .alert)
                 
                 alert.addAction(UIAlertAction(title: "Quit", style: .cancel, handler: nil))
@@ -101,23 +82,5 @@ extension MyTabBarController: UITabBarControllerDelegate {
                 self.present(alert, animated: true)
             }
         }
-//        if let controller = navigation?.children.last as? DetailViewController {
-//
-//            func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//                let cell: CurrentIngredientViewCell = controller.ingredientsTableView.dequeueReusableCell(withIdentifier: "CurrentIngredientViewCell", for:indexPath) as! CurrentIngredientViewCell
-//                let ingredient = controller.recipe?.ingredients?[indexPath.row].food
-//                controller.model.ingredients = ingredient
-//                return cell
-//        }
-//            func numberOfSections(in tableView: UITableView) -> Int {
-//                   return 1
-//               }
-//
-//               func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//                return controller.recipe?.ingredients?.count ?? 0
-//               }
-//
-//    }
-//}
-}
+    }
 }

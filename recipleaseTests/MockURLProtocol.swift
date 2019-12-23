@@ -77,7 +77,7 @@ extension MockURLProtocol {
     }
     
     static func responseWithStatusCode(code: Int) {
-        MockURLProtocol.responseType = MockURLProtocol.ResponseType.success(HTTPURLResponse(url: URL(string: "http://edamame.com")!, statusCode: code, httpVersion: nil, headerFields: nil)!)
+        MockURLProtocol.responseType = MockURLProtocol.ResponseType.success(HTTPURLResponse(url: URL(string: "https://api.edamam.com")!, statusCode: code, httpVersion: nil, headerFields: nil)!)
     }
 }
 

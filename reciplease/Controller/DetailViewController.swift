@@ -21,8 +21,10 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var favIcon: UIBarButtonItem!
     // Properties
     var recipe: Recipe?
+    var isFavorite: Bool = false
+    var indexPath: IndexPath?
     var currentIngredientViewCell: CurrentIngredientViewCell?
-    let model = FavoriteRecipe(context: AppDelegate.viewContext)
+    private var didDelete: ((IndexPath?)->Void)?
     // ***********************************************
     // MARK: - Implementation
     // ***********************************************
@@ -36,18 +38,15 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         super.viewDidLoad()
         recipeLabel.text = recipe?.label
         totalTime.text = String(Int(recipe?.totalTime ?? 0.0)) + " min"
-        
         loadPicture()
-        
-        if model.isFavorite == true {
-            changeAppearanceForFavorite(isFavorite: true)
-        } else {
-            changeAppearanceForFavorite(isFavorite: false)
-        }
-   }
+        changeAppearanceForFavorite(isFavorite: isFavorite)
+        //deleteFavoriteRecipe()
+    }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        //clearCoreDataStore()
+        //deleteFavoriteRecipe()
         self.ingredientsTableView.reloadData()
     }
     
@@ -58,36 +57,94 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
             favIcon.tintColor = .white
         }
     }
+    
+    func didDelete(_ completion: ((IndexPath?)->Void)?) {
+        self.didDelete = completion
+    }
+    
     // ***********************************************
     // MARK: - Actions
     // ***********************************************
     @IBAction func btnClicked(_ sender: UIButton) {
-        guard let urlString = recipe?.url else { return }
-        
-        if let url: URL = URL(string: urlString){
-            UIApplication.shared.open(url)
+        let model = FavoriteRecipe(context: AppDelegate.viewContext)
+        if let urlString = recipe?.url {
+            if let url: URL = URL(string: urlString){
+                UIApplication.shared.open(url)
+            }
+        }else {
+            if let favoriteURLString = model.identifier {
+                model.identifier = recipe?.url
+                if let url: URL = URL(string: favoriteURLString){
+                    UIApplication.shared.open(url)
+                }
+            }
         }
     }
     
     @IBAction func favClicked(_ sender: UIBarButtonItem) {
-        if model.isFavorite == false {
+        if isFavorite == false {
+            self.isFavorite = true
             changeAppearanceForFavorite(isFavorite: true)
-            saveFavoriteRecipe(called: recipe?.url ?? "No url", isFavorite: true)
+            saveFavoriteRecipe()
         } else {
+            deleteFavoriteRecipe()
             changeAppearanceForFavorite(isFavorite: false)
+            self.isFavorite = false
+            self.navigationController?.popViewController(animated: true)
+            self.didDelete?(indexPath)
         }
     }
     // ***********************************************
     // MARK: - Private Methods
     // ***********************************************
-    private func saveFavoriteRecipe(called identifyer: String, isFavorite: Bool) {
-        //let model = FavoriteRecipe(context: AppDelegate.viewContext)
+    private func saveFavoriteRecipe() {
+        let model = FavoriteRecipe(context: AppDelegate.viewContext)
         model.name = recipe?.label
-        model.identifyer = recipe?.uri
+        model.identifier = recipe?.url
         model.isFavorite = true
         model.imageUrlString = recipe?.image
         model.totalTime = recipe?.totalTime ?? 0
+        var ingredientArray = [String]()
+        recipe?.ingredients?.forEach({ ingredient in
+            ingredientArray.append(ingredient.food)
+        })
+        model.ingredients = ingredientArray.joined(separator: ", ")
         (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
+    }
+    
+    private func deleteFavoriteRecipe() {
+        let request: NSFetchRequest<FavoriteRecipe> = FavoriteRecipe.fetchRequest()
+        request.predicate = NSPredicate(format: "identifier='\(recipe!.uri)'")
+        
+        do {
+            let favoriteRecipe = try AppDelegate.viewContext.fetch(request).first
+            if let value = favoriteRecipe {
+                AppDelegate.viewContext.delete(value)
+                (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
+            }
+        } catch let error {
+            print(error)
+        }
+    }
+    
+    private func clearCoreDataStore() {
+        let delegate = UIApplication.shared.delegate as! AppDelegate
+        let context = delegate.persistentContainer.viewContext
+        
+        for i in 0...delegate.persistentContainer.managedObjectModel.entities.count-1 {
+            let entity = delegate.persistentContainer.managedObjectModel.entities[i]
+            
+            do {
+                let query = NSFetchRequest<NSFetchRequestResult>(entityName: entity.name!)
+                let deleterequest = NSBatchDeleteRequest(fetchRequest: query)
+                try context.execute(deleterequest)
+                try context.save()
+                
+            } catch let error as NSError {
+                print("Error: \(error.localizedDescription)")
+                abort()
+            }
+        }
     }
     
     // ***********************************************
@@ -95,18 +152,18 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     // ***********************************************
     
     internal func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-            let cell: CurrentIngredientViewCell = ingredientsTableView.dequeueReusableCell(withIdentifier: "CurrentIngredientViewCell", for:indexPath) as! CurrentIngredientViewCell
-            let ingredient = self.recipe?.ingredients?[indexPath.row].food
-            cell.nameLabel?.text = ingredient
-
-            return cell
+        let cell: CurrentIngredientViewCell = ingredientsTableView.dequeueReusableCell(withIdentifier: "CurrentIngredientViewCell", for:indexPath) as! CurrentIngredientViewCell
+        let ingredient = self.recipe?.ingredients?[indexPath.row].food
+        cell.nameLabel?.text = ingredient
+        
+        return cell
     }
-
-
+    
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return recipe?.ingredients?.count ?? 0
     }
@@ -121,7 +178,7 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
             DispatchQueue.global().async {
                 let data = try? Data(contentsOf: imageURL)
                 if let data = data {
-                   let image = UIImage(data: data)
+                    let image = UIImage(data: data)
                     DispatchQueue.main.async {
                         self.recipeImage.image = image
                     }
@@ -129,4 +186,8 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
             }
         }
     }
+}
+
+extension UIView {
+    var isOnWindow: Bool { return window != nil }
 }

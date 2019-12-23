@@ -115,7 +115,6 @@ struct Recipe: Codable {
     let ingredientLines: [String]
     let ingredients: [Ingredient]?
     let totalTime: Double
-    //var isFavorite: Bool? = false
 }
 
 // MARK: Recipe convenience initializers and mutators
@@ -126,15 +125,22 @@ extension Recipe {
     }
     
     init(with favoriteRecipe: FavoriteRecipe) {
-        self.uri = favoriteRecipe.identifyer ?? ""
+        self.uri =  ""
         self.label = favoriteRecipe.name ?? ""
         self.image = favoriteRecipe.imageUrlString ?? ""
-        self.url = ""
+        self.url =  favoriteRecipe.identifier ?? ""
         self.yield = 0
         self.ingredientLines = [""]
-        self.ingredients = nil
-        self.totalTime = 0.0
-       // self.isFavorite = favoriteRecipe.isFavorite
+        
+        var ingredientsArray = [Ingredient]()
+        let nameArray = favoriteRecipe.ingredients?.components(separatedBy: ", ")
+        nameArray?.forEach({ name in
+            let ingredient = Ingredient(text: "", quantity: 0, measure: nil, food: name, weight: 0)
+            ingredientsArray.append(ingredient)
+        })
+        self.ingredients = ingredientsArray
+        
+        self.totalTime = favoriteRecipe.totalTime 
     }
 
     init(_ json: String, using encoding: String.Encoding = .utf8) throws {
@@ -157,7 +163,6 @@ extension Recipe {
         ingredientLines: [String]? = nil,
         ingredients: [Ingredient]? = nil,
         totalTime: Double? = nil
-       // isFavorite: Bool? = nil
     ) -> Recipe {
         return Recipe(
             uri: uri ?? self.uri,
@@ -168,7 +173,6 @@ extension Recipe {
             ingredientLines: ingredientLines ?? self.ingredientLines,
             ingredients: ingredients ?? self.ingredients,
             totalTime: totalTime ?? self.totalTime
-           // isFavorite: isFavorite ?? self.isFavorite
         )
     }
 

@@ -26,7 +26,7 @@ import XCTest
                 
                 return SessionManager(configuration: configuration)
             }()
-            //sut = APIIngredients(manager: manager)
+            sut = APIIngredients(manager: manager)
         }
         
         override func tearDown() {
@@ -42,8 +42,8 @@ import XCTest
             let expectation = XCTestExpectation(description: "Performs a request")
             
             // when
-            sut.execute(["ingredients"]) { (result) in
-               // XCTAssertEqual((((result.response? as AnyObject))!).statusCode, 200)
+            sut.execute(["chicken"]) { (result) in
+                XCTAssertEqual((((result as AnyObject))).statusCode, 200)
                 expectation.fulfill()
             }
             

@@ -17,10 +17,10 @@ class RecipesViewController: UIViewController, UITableViewDelegate {
     // Properties
     let viewCell =  RecipeViewCell()
     private var gradientLayer: CAGradientLayer!
-    private var detail: DetailViewController!
     private var recipe: Recipe?
     private var ingredients: [String]!
     internal var recipes: [Recipe]!
+    var isFromFavorites: Bool = false
     // ***********************************************
     // MARK: - Implementation
     // ***********************************************
@@ -51,11 +51,16 @@ class RecipesViewController: UIViewController, UITableViewDelegate {
             }
             let controller = segue.destination as? DetailViewController
             controller?.recipe = recipe
-            _ = segue.destination as? DetailViewController
+            controller?.isFavorite = isFromFavorites
+            controller?.indexPath = (sender as! IndexPath)
+            controller?.didDelete({ indexPath in
+                guard let value = indexPath else { return }
+                self.recipes.remove(at: value.row)
+                self.tableView.deleteRows(at: [value], with: .fade)
+            })
         }
     }
 }
-
 extension RecipesViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -81,7 +86,6 @@ extension RecipesViewController: UITableViewDataSource {
             }
             cell.totalTime.text = String(Int(recipes[indexPath.row].totalTime))+" min"
             
-            //cell.rating.text = String(recipes[indexPath.row].yield)
             
             if cell.gradientLayer == nil {
                 _ =  cell.recipeImage.image
@@ -97,7 +101,7 @@ extension RecipesViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         recipe = self.recipes[indexPath.row]
-        self.performSegue(withIdentifier: "DetailSegue", sender: self)
+        self.performSegue(withIdentifier: "DetailSegue", sender: indexPath)
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -107,4 +111,16 @@ extension RecipesViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return recipes?.count ?? 0
     }
+    
+//    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+//        return true
+//    }
+//    func tableView(_ tableView: UITableView, commit editingStyle:   UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+//        if (editingStyle == .delete) {
+//            self.recipes.remove(at: indexPath.row)
+//            tableView.beginUpdates()
+//            tableView.deleteRows(at: [indexPath], with: .none)
+//            tableView.endUpdates()
+//        }
+//    }
 }
