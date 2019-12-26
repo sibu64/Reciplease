@@ -63,9 +63,13 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     // MARK: - Actions
     // ***********************************************
     @IBAction func btnClicked(_ sender: UIButton) {
+        let model = FavoriteRecipe(context: AppDelegate.viewContext)
         guard let urlString = recipe?.url else { return }
-        
         if let url: URL = URL(string: urlString){
+            UIApplication.shared.open(url)
+        }
+        guard let favoriteURLString = model.identifyer else { return }
+        if let url: URL = URL(string: favoriteURLString){
             UIApplication.shared.open(url)
         }
     }

@@ -125,7 +125,7 @@ extension Recipe {
     }
     
     init(with favoriteRecipe: FavoriteRecipe) {
-        self.uri = favoriteRecipe.identifyer ?? ""
+        self.uri =  favoriteRecipe.identifyer ?? ""
         self.label = favoriteRecipe.name ?? ""
         self.image = favoriteRecipe.imageUrlString ?? ""
         self.url = ""

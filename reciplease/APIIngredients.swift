@@ -9,7 +9,7 @@
 import Foundation
 import Alamofire
 
-class APIIngredients {  //: NetworkRequest {
+class APIIngredients {//: NetworkRequest {
     
 //    func get<DataType>(_ url: URL, with: [String : Any], completion: @escaping (DataType?, Error?) -> Void) where DataType : Decodable, DataType : Encodable {
 //
