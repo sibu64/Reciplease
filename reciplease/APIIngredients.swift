@@ -9,17 +9,21 @@
 import Foundation
 import Alamofire
 
-class APIIngredients {
+class APIIngredients {  //: NetworkRequest {
     
-    private let manager: SessionManager
-    init(manager: SessionManager = SessionManager.default) {
-        self.manager = manager
-    }
+//    func get<DataType>(_ url: URL, with: [String : Any], completion: @escaping (DataType?, Error?) -> Void) where DataType : Decodable, DataType : Encodable {
+//
+//    }
     
+//    private let manager: SessionManager
+//    init(manager: SessionManager = SessionManager.default) {
+//        self.manager = manager
+//    }
+//
     func execute(_ ingredients: [String], completion: @escaping (([Recipe]) -> ())) {
         do {
             let request = try Router.search(ingredients: ingredients).asURLRequest()
-            manager.request(request).responseJSON { response in
+            Alamofire.request(request).responseJSON { response in
                 if let responseData = response.data{
                    let decoder = JSONDecoder()
                     do {
@@ -27,10 +31,10 @@ class APIIngredients {
                         let recipes = model.hits.map { $0.recipe }
                         completion(recipes)
                     } catch let error {
-                        print(error)
+                        print(error.localizedDescription)
                     }
                 }
-            //print("Error:\(error)")
+            //print(response)
             }
         } catch {
             print("Error:\(error)")

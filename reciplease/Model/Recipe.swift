@@ -125,22 +125,19 @@ extension Recipe {
     }
     
     init(with favoriteRecipe: FavoriteRecipe) {
-        self.uri =  ""
+        self.uri = favoriteRecipe.identifyer ?? ""
         self.label = favoriteRecipe.name ?? ""
         self.image = favoriteRecipe.imageUrlString ?? ""
-        self.url =  favoriteRecipe.identifier ?? ""
+        self.url = ""
         self.yield = 0
         self.ingredientLines = [""]
+        self.totalTime = favoriteRecipe.totalTime
         
-        var ingredientsArray = [Ingredient]()
-        let nameArray = favoriteRecipe.ingredients?.components(separatedBy: ", ")
-        nameArray?.forEach({ name in
-            let ingredient = Ingredient(text: "", quantity: 0, measure: nil, food: name, weight: 0)
-            ingredientsArray.append(ingredient)
-        })
-        self.ingredients = ingredientsArray
-        
-        self.totalTime = favoriteRecipe.totalTime 
+        let names = favoriteRecipe.ingredients?.components(separatedBy: ", ")
+        let ingredients = names?.map {
+            Ingredient(text: "", quantity: 0, measure: nil, food: $0, weight: 0)
+        }
+        self.ingredients = ingredients
     }
 
     init(_ json: String, using encoding: String.Encoding = .utf8) throws {

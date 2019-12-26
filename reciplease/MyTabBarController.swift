@@ -18,10 +18,18 @@ class MyTabBarController: UITabBarController {
     private var favoriteRecipes: [FavoriteRecipe] {
         return FavoriteRecipe.all
     }
-    let model = FavoriteRecipe(context: AppDelegate.viewContext)
+    /*private var recipeController: RecipesViewController? {
+        let navigation = children.last as? UINavigationController
+        return navigation?.children.first as? RecipesViewController
+    }*/
     // ***********************************************
     // MARK: - Implementation
     // ***********************************************
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,7 +37,9 @@ class MyTabBarController: UITabBarController {
         setupTabBarSeparators()
         barItemAppearance()
     }
-    
+    // ***********************************************
+    // MARK: - Segue
+    // ***********************************************
     func setupTabBarSeparators() {
         
         let itemWidth = floor(self.myTabBar.frame.size.width / CGFloat(self.myTabBar.items!.count))
@@ -65,6 +75,8 @@ class MyTabBarController: UITabBarController {
     }
 }
 
+
+
 extension MyTabBarController: UITabBarControllerDelegate {
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
         
@@ -73,8 +85,7 @@ extension MyTabBarController: UITabBarControllerDelegate {
             controller.recipes = favoriteRecipes.map { Recipe(with: $0) }
             controller.isFromFavorites = true
             
-            if favoriteRecipes.isEmpty {
-                controller.tableView?.reloadData()
+           if favoriteRecipes.isEmpty{
                 let alert = UIAlertController(title: "You don't have any favorite!", message: "You must click on the star to add a recipe to your favorite", preferredStyle: .alert)
                 
                 alert.addAction(UIAlertAction(title: "Quit", style: .cancel, handler: nil))

@@ -8,6 +8,16 @@
 import UIKit
 import CoreData
 
+
+/*class RecipeViewModel {
+    private var model: Recipe
+    var isFavorite: Bool = false
+    
+    init(model: Recipe) {
+        self.model = model
+    }
+}*/
+
 class RecipesViewController: UIViewController, UITableViewDelegate {
     
     // ***********************************************
@@ -17,6 +27,7 @@ class RecipesViewController: UIViewController, UITableViewDelegate {
     // Properties
     let viewCell =  RecipeViewCell()
     private var gradientLayer: CAGradientLayer!
+    private var detail: DetailViewController!
     private var recipe: Recipe?
     private var ingredients: [String]!
     internal var recipes: [Recipe]!
@@ -58,9 +69,11 @@ class RecipesViewController: UIViewController, UITableViewDelegate {
                 self.recipes.remove(at: value.row)
                 self.tableView.deleteRows(at: [value], with: .fade)
             })
+            _ = segue.destination as? DetailViewController
         }
     }
 }
+
 extension RecipesViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -86,6 +99,7 @@ extension RecipesViewController: UITableViewDataSource {
             }
             cell.totalTime.text = String(Int(recipes[indexPath.row].totalTime))+" min"
             
+            //cell.rating.text = String(recipes[indexPath.row].yield)
             
             if cell.gradientLayer == nil {
                 _ =  cell.recipeImage.image
@@ -111,16 +125,4 @@ extension RecipesViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return recipes?.count ?? 0
     }
-    
-//    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-//        return true
-//    }
-//    func tableView(_ tableView: UITableView, commit editingStyle:   UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-//        if (editingStyle == .delete) {
-//            self.recipes.remove(at: indexPath.row)
-//            tableView.beginUpdates()
-//            tableView.deleteRows(at: [indexPath], with: .none)
-//            tableView.endUpdates()
-//        }
-//    }
 }

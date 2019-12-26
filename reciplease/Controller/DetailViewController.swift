@@ -39,14 +39,12 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         recipeLabel.text = recipe?.label
         totalTime.text = String(Int(recipe?.totalTime ?? 0.0)) + " min"
         loadPicture()
+        
         changeAppearanceForFavorite(isFavorite: isFavorite)
-        //deleteFavoriteRecipe()
-    }
+   }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        //clearCoreDataStore()
-        //deleteFavoriteRecipe()
         self.ingredientsTableView.reloadData()
     }
     
@@ -61,23 +59,14 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func didDelete(_ completion: ((IndexPath?)->Void)?) {
         self.didDelete = completion
     }
-    
     // ***********************************************
     // MARK: - Actions
     // ***********************************************
     @IBAction func btnClicked(_ sender: UIButton) {
-        let model = FavoriteRecipe(context: AppDelegate.viewContext)
-        if let urlString = recipe?.url {
-            if let url: URL = URL(string: urlString){
-                UIApplication.shared.open(url)
-            }
-        }else {
-            if let favoriteURLString = model.identifier {
-                model.identifier = recipe?.url
-                if let url: URL = URL(string: favoriteURLString){
-                    UIApplication.shared.open(url)
-                }
-            }
+        guard let urlString = recipe?.url else { return }
+        
+        if let url: URL = URL(string: urlString){
+            UIApplication.shared.open(url)
         }
     }
     
@@ -100,21 +89,19 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     private func saveFavoriteRecipe() {
         let model = FavoriteRecipe(context: AppDelegate.viewContext)
         model.name = recipe?.label
-        model.identifier = recipe?.url
+        model.identifyer = recipe?.uri
         model.isFavorite = true
         model.imageUrlString = recipe?.image
         model.totalTime = recipe?.totalTime ?? 0
-        var ingredientArray = [String]()
-        recipe?.ingredients?.forEach({ ingredient in
-            ingredientArray.append(ingredient.food)
-        })
-        model.ingredients = ingredientArray.joined(separator: ", ")
+        
+        let ingredients = recipe?.ingredients?.map { $0.food }
+        model.ingredients = ingredients?.joined(separator: ", ")
         (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
     }
     
     private func deleteFavoriteRecipe() {
         let request: NSFetchRequest<FavoriteRecipe> = FavoriteRecipe.fetchRequest()
-        request.predicate = NSPredicate(format: "identifier='\(recipe!.uri)'")
+        request.predicate = NSPredicate(format: "identifyer='\(recipe!.uri)'")
         
         do {
             let favoriteRecipe = try AppDelegate.viewContext.fetch(request).first
@@ -126,44 +113,23 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
             print(error)
         }
     }
-    
-    private func clearCoreDataStore() {
-        let delegate = UIApplication.shared.delegate as! AppDelegate
-        let context = delegate.persistentContainer.viewContext
-        
-        for i in 0...delegate.persistentContainer.managedObjectModel.entities.count-1 {
-            let entity = delegate.persistentContainer.managedObjectModel.entities[i]
-            
-            do {
-                let query = NSFetchRequest<NSFetchRequestResult>(entityName: entity.name!)
-                let deleterequest = NSBatchDeleteRequest(fetchRequest: query)
-                try context.execute(deleterequest)
-                try context.save()
-                
-            } catch let error as NSError {
-                print("Error: \(error.localizedDescription)")
-                abort()
-            }
-        }
-    }
-    
     // ***********************************************
     // MARK: - TABLEVIEWS
     // ***********************************************
     
     internal func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: CurrentIngredientViewCell = ingredientsTableView.dequeueReusableCell(withIdentifier: "CurrentIngredientViewCell", for:indexPath) as! CurrentIngredientViewCell
-        let ingredient = self.recipe?.ingredients?[indexPath.row].food
-        cell.nameLabel?.text = ingredient
-        
-        return cell
+            let cell: CurrentIngredientViewCell = ingredientsTableView.dequeueReusableCell(withIdentifier: "CurrentIngredientViewCell", for:indexPath) as! CurrentIngredientViewCell
+            let ingredient = self.recipe?.ingredients?[indexPath.row].food
+            cell.nameLabel?.text = ingredient
+
+            return cell
     }
-    
-    
+
+
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return recipe?.ingredients?.count ?? 0
     }
@@ -178,7 +144,7 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
             DispatchQueue.global().async {
                 let data = try? Data(contentsOf: imageURL)
                 if let data = data {
-                    let image = UIImage(data: data)
+                   let image = UIImage(data: data)
                     DispatchQueue.main.async {
                         self.recipeImage.image = image
                     }
@@ -186,8 +152,4 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
             }
         }
     }
-}
-
-extension UIView {
-    var isOnWindow: Bool { return window != nil }
 }
