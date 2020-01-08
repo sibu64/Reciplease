@@ -23,7 +23,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, ActivityIndic
     let activityIndicator = UIActivityIndicatorView()
     private var ingredients: [String] = []
     private var model: Welcome?
-    private var apiIngredients = APIIngredients()
+    var apiIngredients: NetworkRequestProtocol = APIIngredients()
     private var recipes = [Recipe]()
     // ***********************************************
     // MARK: - Implementation
@@ -53,7 +53,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, ActivityIndic
     private func load() {
         showActivityIndicator()
         guard !ingredients.isEmpty else { return }
-        apiIngredients.execute(ingredients) { recipes in
+        apiIngredients.get(ingredients) { recipes in
             self.hideActivityIndicator()
             self.recipes = recipes
             self.performSegue(withIdentifier: "RecipeSegue", sender: self)

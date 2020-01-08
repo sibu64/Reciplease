@@ -75,21 +75,20 @@ class MyTabBarController: UITabBarController {
     }
 }
 
-
-
 extension MyTabBarController: UITabBarControllerDelegate {
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
-        
         let navigation = viewController as? UINavigationController
         if let controller = navigation?.children.first as? RecipesViewController {
             controller.recipes = favoriteRecipes.map { Recipe(with: $0) }
             controller.isFromFavorites = true
-            
-           if favoriteRecipes.isEmpty{
-                let alert = UIAlertController(title: "You don't have any favorite!", message: "You must click on the star to add a recipe to your favorite", preferredStyle: .alert)
+                    
+            if favoriteRecipes.isEmpty{
+                let alert = UIAlertController(title: "You don't have any favorite!", message: "You must click on the star on the recipe's details to add a recipe to your favorite", preferredStyle: .alert)
                 
-                alert.addAction(UIAlertAction(title: "Quit", style: .cancel, handler: nil))
-                
+                let action = UIAlertAction(title: "Quit", style: .cancel) { alert in
+                    self.selectedIndex = 0
+                }
+                alert.addAction(action)
                 self.present(alert, animated: true)
             }
         }

@@ -106,7 +106,7 @@ extension Hit {
 }
 
 // MARK: - Recipe
-struct Recipe: Codable {
+struct Recipe: Codable, Equatable {
     let uri: String
     var label: String
     let image: String
@@ -125,10 +125,10 @@ extension Recipe {
     }
     
     init(with favoriteRecipe: FavoriteRecipe) {
-        self.uri =  favoriteRecipe.identifyer ?? ""
+        self.uri = ""
         self.label = favoriteRecipe.name ?? ""
         self.image = favoriteRecipe.imageUrlString ?? ""
-        self.url = ""
+        self.url = favoriteRecipe.identifyer ?? ""
         self.yield = 0
         self.ingredientLines = [""]
         self.totalTime = favoriteRecipe.totalTime
@@ -252,7 +252,7 @@ enum Unit: String, Codable {
 }
 
 // MARK: - Ingredient
-struct Ingredient: Codable {
+struct Ingredient: Codable, Equatable {
     let text: String
     let quantity: Double
     let measure: String?

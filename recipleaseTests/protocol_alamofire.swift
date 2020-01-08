@@ -14,18 +14,18 @@ enum NetworkRequestError: Error {
     case serializationError(Error?)
 }
  
-protocol NetworkRequest {
+protocol NetworkRequestProtocol {
     func get<Recipe: Codable>(_ url: URL, with: [String: Any], completion: @escaping (Recipe?, Error?) -> Void)
 }
  
  
-class AlamofireNetworkRequest: NetworkRequest {
+class AlamofireNetworkRequest: NetworkRequestProtocol {
     func get<Recipe: Codable>(_ url: URL, with: [String: Any], completion: @escaping (Recipe?, Error?) -> Void) {
         // Do whatever needed with Alamofire
     }
 }
  
-struct FakeNetworkRequest: NetworkRequest {
+struct FakeNetworkRequest: NetworkRequestProtocol {
     var data: Data?
     var response: HTTPURLResponse?
     var error: Error?

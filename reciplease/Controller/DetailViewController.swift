@@ -93,7 +93,7 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     private func saveFavoriteRecipe() {
         let model = FavoriteRecipe(context: AppDelegate.viewContext)
         model.name = recipe?.label
-        model.identifyer = recipe?.uri
+        model.identifyer = recipe?.url
         model.isFavorite = true
         model.imageUrlString = recipe?.image
         model.totalTime = recipe?.totalTime ?? 0
@@ -105,7 +105,7 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     private func deleteFavoriteRecipe() {
         let request: NSFetchRequest<FavoriteRecipe> = FavoriteRecipe.fetchRequest()
-        request.predicate = NSPredicate(format: "identifyer='\(recipe!.uri)'")
+        request.predicate = NSPredicate(format: "identifyer='\(recipe!.url)'")
         
         do {
             let favoriteRecipe = try AppDelegate.viewContext.fetch(request).first
@@ -124,7 +124,7 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     internal func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
             let cell: CurrentIngredientViewCell = ingredientsTableView.dequeueReusableCell(withIdentifier: "CurrentIngredientViewCell", for:indexPath) as! CurrentIngredientViewCell
             let ingredient = self.recipe?.ingredients?[indexPath.row].food
-            cell.nameLabel?.text = ingredient
+            cell.nameLabel?.text = "- " + ingredient!
 
             return cell
     }
