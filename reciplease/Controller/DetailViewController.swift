@@ -51,7 +51,7 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func changeAppearanceForFavorite(isFavorite: Bool) {
         if isFavorite == true {
-            favIcon.tintColor = .green
+            favIcon.tintColor = .systemGreen
         } else {
             favIcon.tintColor = .white
         }
