@@ -128,7 +128,7 @@ extension Recipe {
         self.uri = ""
         self.label = favoriteRecipe.name ?? ""
         self.image = favoriteRecipe.imageUrlString ?? ""
-        self.url = favoriteRecipe.identifyer ?? ""
+        self.url = favoriteRecipe.identifier ?? ""
         self.yield = 0
         self.ingredientLines = [""]
         self.totalTime = favoriteRecipe.totalTime

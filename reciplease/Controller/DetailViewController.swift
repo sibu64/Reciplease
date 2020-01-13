@@ -25,6 +25,7 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var indexPath: IndexPath?
     var currentIngredientViewCell: CurrentIngredientViewCell?
     private var didDelete: ((IndexPath?)->Void)?
+    private var coreDataManager: CoreDataManager?
     // ***********************************************
     // MARK: - Implementation
     // ***********************************************
@@ -68,7 +69,7 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if let url: URL = URL(string: urlString){
             UIApplication.shared.open(url)
         }
-        guard let favoriteURLString = model.identifyer else { return }
+        guard let favoriteURLString = model.identifier else { return }
         if let url: URL = URL(string: favoriteURLString){
             UIApplication.shared.open(url)
         }
@@ -93,20 +94,20 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     private func saveFavoriteRecipe() {
         let model = FavoriteRecipe(context: AppDelegate.viewContext)
         model.name = recipe?.label
-        model.identifyer = recipe?.url
+        model.identifier = recipe?.url
         model.isFavorite = true
         model.imageUrlString = recipe?.image
         model.totalTime = recipe?.totalTime ?? 0
-        
+
         let ingredients = recipe?.ingredients?.map { $0.food }
         model.ingredients = ingredients?.joined(separator: ", ")
         (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
     }
-    
+
     private func deleteFavoriteRecipe() {
         let request: NSFetchRequest<FavoriteRecipe> = FavoriteRecipe.fetchRequest()
-        request.predicate = NSPredicate(format: "identifyer='\(recipe!.url)'")
-        
+        request.predicate = NSPredicate(format: "identifier='\(recipe!.url)'")
+
         do {
             let favoriteRecipe = try AppDelegate.viewContext.fetch(request).first
             if let value = favoriteRecipe {

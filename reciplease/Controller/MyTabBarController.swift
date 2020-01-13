@@ -7,6 +7,7 @@
 //
 
 import UIKit
+//import CoreData
 
 class MyTabBarController: UITabBarController {
     
@@ -79,7 +80,8 @@ extension MyTabBarController: UITabBarControllerDelegate {
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
         let navigation = viewController as? UINavigationController
         if let controller = navigation?.children.first as? RecipesViewController {
-            controller.recipes = favoriteRecipes.map { Recipe(with: $0) }
+            //let count = favoriteRecipes.removingDuplicates()
+            controller.recipes = favoriteRecipes.removingDuplicates().map { Recipe(with: $0) }//map { Recipe(with: $0) }
             controller.isFromFavorites = true
                     
             if favoriteRecipes.isEmpty{
@@ -90,6 +92,16 @@ extension MyTabBarController: UITabBarControllerDelegate {
                 }
                 alert.addAction(action)
                 self.present(alert, animated: true)
+            }
+        }
+    }
+}
+
+extension Array where Element: Equatable {
+    func removingDuplicates() -> Array {
+        return reduce(into: []) { result, element in
+            if !result.contains(element) {
+                result.append(element)
             }
         }
     }
