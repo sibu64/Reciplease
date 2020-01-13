@@ -23,7 +23,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, ActivityIndic
     let activityIndicator = UIActivityIndicatorView()
     private var ingredients: [String] = []
     private var model: Welcome?
-    private var apiIngredients = APIIngredients()
+    var apiIngredients: NetworkRequestProtocol = APIIngredients()
     private var recipes = [Recipe]()
     // ***********************************************
     // MARK: - Implementation
@@ -34,9 +34,9 @@ class SearchViewController: UIViewController, UITableViewDelegate, ActivityIndic
         tableView.reloadData()
     }
     
-//    override func viewDidLoad() {
-//        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
-//    }
+    override func viewDidLoad() {
+        self.textField.delegate = self
+    }
     
     // ***********************************************
     // MARK: - Segue
@@ -53,7 +53,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, ActivityIndic
     private func load() {
         showActivityIndicator()
         guard !ingredients.isEmpty else { return }
-        apiIngredients.execute(ingredients) { recipes in
+        apiIngredients.get(ingredients) { recipes in
             self.hideActivityIndicator()
             self.recipes = recipes
             self.performSegue(withIdentifier: "RecipeSegue", sender: self)
@@ -124,7 +124,7 @@ extension UITextField {
 
 extension SearchViewController: UITextFieldDelegate {
 func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-    textField.resignFirstResponder()
+    hideKeyboard()
     return true
    }
 }

@@ -1,0 +1,60 @@
+{
+    "q": "chicken",
+    "from": 0,
+    "to": 3,
+    "params": {
+        "sane": [],
+        "q": [
+            "chicken"
+        ],
+        "app_key": [
+            "53f7376ae74f62ffa5beffdb4332a83f"
+        ],
+        "health": [
+            "alcohol-free"
+        ],
+        "from": [
+            "0"
+        ],
+        "to": [
+            "3"
+        ],
+        "calories": [
+            "591-722"
+        ],
+        "app_id": [
+            "6a8405b5"
+        ]
+    },
+    "more": true,
+    "count": 13227,
+    "hits": [
+        {
+            "recipe": {
+                "uri": "uri",
+                "label": "label",
+                "image": "https://image.com",
+                "url": "url",
+                "yield": 0,
+                "ingredientLines": [
+                    "lemon"
+                ],
+                "ingredients": [
+                    {
+                        "text": "lemon",
+                        "quantity": 1,
+                        "measure": "lemonmeasure",
+                        "food": "lemonfood",
+                        "weight": 10.5
+                    }
+                ],
+                "totalTime": 160,
+                "calories": 2384.8975,
+                "totalWeight": 980.9328012023324
+            },
+            "bookmarked": false,
+            "bought": false
+        }
+    ]
+}
+

@@ -25,6 +25,7 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var indexPath: IndexPath?
     var currentIngredientViewCell: CurrentIngredientViewCell?
     private var didDelete: ((IndexPath?)->Void)?
+    private var coreDataManager: CoreDataManager?
     // ***********************************************
     // MARK: - Implementation
     // ***********************************************
@@ -50,7 +51,7 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func changeAppearanceForFavorite(isFavorite: Bool) {
         if isFavorite == true {
-            favIcon.tintColor = .green
+            favIcon.tintColor = .systemGreen
         } else {
             favIcon.tintColor = .white
         }
@@ -63,9 +64,13 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     // MARK: - Actions
     // ***********************************************
     @IBAction func btnClicked(_ sender: UIButton) {
+        let model = FavoriteRecipe(context: AppDelegate.viewContext)
         guard let urlString = recipe?.url else { return }
-        
         if let url: URL = URL(string: urlString){
+            UIApplication.shared.open(url)
+        }
+        guard let favoriteURLString = model.identifier else { return }
+        if let url: URL = URL(string: favoriteURLString){
             UIApplication.shared.open(url)
         }
     }
@@ -89,20 +94,20 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     private func saveFavoriteRecipe() {
         let model = FavoriteRecipe(context: AppDelegate.viewContext)
         model.name = recipe?.label
-        model.identifyer = recipe?.uri
+        model.identifier = recipe?.url
         model.isFavorite = true
         model.imageUrlString = recipe?.image
         model.totalTime = recipe?.totalTime ?? 0
-        
+
         let ingredients = recipe?.ingredients?.map { $0.food }
         model.ingredients = ingredients?.joined(separator: ", ")
         (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
     }
-    
+
     private func deleteFavoriteRecipe() {
         let request: NSFetchRequest<FavoriteRecipe> = FavoriteRecipe.fetchRequest()
-        request.predicate = NSPredicate(format: "identifyer='\(recipe!.uri)'")
-        
+        request.predicate = NSPredicate(format: "identifier='\(recipe!.url)'")
+
         do {
             let favoriteRecipe = try AppDelegate.viewContext.fetch(request).first
             if let value = favoriteRecipe {
@@ -120,7 +125,7 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     internal func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
             let cell: CurrentIngredientViewCell = ingredientsTableView.dequeueReusableCell(withIdentifier: "CurrentIngredientViewCell", for:indexPath) as! CurrentIngredientViewCell
             let ingredient = self.recipe?.ingredients?[indexPath.row].food
-            cell.nameLabel?.text = ingredient
+            cell.nameLabel?.text = "- " + ingredient!
 
             return cell
     }

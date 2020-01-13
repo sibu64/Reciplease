@@ -99,8 +99,6 @@ extension RecipesViewController: UITableViewDataSource {
             }
             cell.totalTime.text = String(Int(recipes[indexPath.row].totalTime))+" min"
             
-            //cell.rating.text = String(recipes[indexPath.row].yield)
-            
             if cell.gradientLayer == nil {
                 _ =  cell.recipeImage.image
                cell.createGradientLayer()
