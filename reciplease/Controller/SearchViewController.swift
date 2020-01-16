@@ -34,9 +34,9 @@ class SearchViewController: UIViewController, UITableViewDelegate, ActivityIndic
         tableView.reloadData()
     }
     
-    override func viewDidLoad() {
-        self.textField.delegate = self
-    }
+//    override func viewDidLoad() {
+//        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
+//    }
     
     // ***********************************************
     // MARK: - Segue
@@ -124,7 +124,7 @@ extension UITextField {
 
 extension SearchViewController: UITextFieldDelegate {
 func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-    hideKeyboard()
+    textField.resignFirstResponder()
     return true
    }
 }

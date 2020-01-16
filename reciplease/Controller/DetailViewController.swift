@@ -20,12 +20,12 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var buttonView: UIView!
     @IBOutlet weak var favIcon: UIBarButtonItem!
     // Properties
+    private var coreDataManager = CoreDataManager()
     var recipe: Recipe?
     var isFavorite: Bool = false
     var indexPath: IndexPath?
     var currentIngredientViewCell: CurrentIngredientViewCell?
     private var didDelete: ((IndexPath?)->Void)?
-    private var coreDataManager: CoreDataManager?
     // ***********************************************
     // MARK: - Implementation
     // ***********************************************
@@ -42,6 +42,14 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         loadPicture()
         
         changeAppearanceForFavorite(isFavorite: isFavorite)
+        
+        coreDataManager.persistentContainer.loadPersistentStores { storeDescription, error in
+            self.coreDataManager.persistentContainer.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+
+            if let error = error {
+                print("Unresolved error \(error)")
+            }
+        }
    }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -51,7 +59,7 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func changeAppearanceForFavorite(isFavorite: Bool) {
         if isFavorite == true {
-            favIcon.tintColor = .systemGreen
+            favIcon.tintColor = .green
         } else {
             favIcon.tintColor = .white
         }
@@ -64,13 +72,8 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     // MARK: - Actions
     // ***********************************************
     @IBAction func btnClicked(_ sender: UIButton) {
-        let model = FavoriteRecipe(context: AppDelegate.viewContext)
         guard let urlString = recipe?.url else { return }
         if let url: URL = URL(string: urlString){
-            UIApplication.shared.open(url)
-        }
-        guard let favoriteURLString = model.identifier else { return }
-        if let url: URL = URL(string: favoriteURLString){
             UIApplication.shared.open(url)
         }
     }
@@ -92,30 +95,23 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     // MARK: - Private Methods
     // ***********************************************
     private func saveFavoriteRecipe() {
-        let model = FavoriteRecipe(context: AppDelegate.viewContext)
+        let model = FavoriteRecipe(context: coreDataManager.persistentContainer.viewContext)
         model.name = recipe?.label
         model.identifier = recipe?.url
         model.isFavorite = true
         model.imageUrlString = recipe?.image
         model.totalTime = recipe?.totalTime ?? 0
-
+        
         let ingredients = recipe?.ingredients?.map { $0.food }
         model.ingredients = ingredients?.joined(separator: ", ")
         (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
     }
-
+    
     private func deleteFavoriteRecipe() {
-        let request: NSFetchRequest<FavoriteRecipe> = FavoriteRecipe.fetchRequest()
-        request.predicate = NSPredicate(format: "identifier='\(recipe!.url)'")
-
-        do {
-            let favoriteRecipe = try AppDelegate.viewContext.fetch(request).first
-            if let value = favoriteRecipe {
-                AppDelegate.viewContext.delete(value)
-                (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
-            }
-        } catch let error {
-            print(error)
+        guard let value = recipe else { return }
+        if let favoriteRecipe = coreDataManager.find(value) {
+            coreDataManager.remove(objectID: favoriteRecipe.objectID)
+            coreDataManager.save()
         }
     }
     // ***********************************************
