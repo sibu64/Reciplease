@@ -7,7 +7,6 @@
 //
 
 import UIKit
-//import CoreData
 
 class MyTabBarController: UITabBarController {
     
@@ -17,7 +16,7 @@ class MyTabBarController: UITabBarController {
     @IBOutlet weak var myTabBar: UITabBar!
     // Properties
     private var favoriteRecipes: [FavoriteRecipe] {
-        return FavoriteRecipe.all
+        return CoreDataManager().fetchAll
     }
     /*private var recipeController: RecipesViewController? {
         let navigation = children.last as? UINavigationController
@@ -80,28 +79,17 @@ extension MyTabBarController: UITabBarControllerDelegate {
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
         let navigation = viewController as? UINavigationController
         if let controller = navigation?.children.first as? RecipesViewController {
-            //let count = favoriteRecipes.removingDuplicates()
-            controller.recipes = favoriteRecipes.removingDuplicates().map { Recipe(with: $0) }//map { Recipe(with: $0) }
+            controller.recipes = favoriteRecipes.map { Recipe(with: $0) }
             controller.isFromFavorites = true
                     
             if favoriteRecipes.isEmpty{
-                let alert = UIAlertController(title: "You don't have any favorite!", message: "You must click on the star on the recipe's details to add a recipe to your favorite", preferredStyle: .alert)
+                let alert = UIAlertController(title: "You don't have any favorite!", message: "You must click on the star on the recipe's detail's screen to add a recipe to your favorite", preferredStyle: .alert)
                 
-                let action = UIAlertAction(title: "Quit", style: .cancel) { alert in
+                let action = UIAlertAction(title: "I have understood", style: .cancel) { alert in
                     self.selectedIndex = 0
                 }
                 alert.addAction(action)
                 self.present(alert, animated: true)
-            }
-        }
-    }
-}
-
-extension Array where Element: Equatable {
-    func removingDuplicates() -> Array {
-        return reduce(into: []) { result, element in
-            if !result.contains(element) {
-                result.append(element)
             }
         }
     }

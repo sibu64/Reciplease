@@ -6,16 +6,12 @@
 //  Copyright © 2019 Darrieumerlou. All rights reserved.
 //
 
-import UIKit
 import CoreData
 
 class FavoriteRecipe: NSManagedObject {
-    var recipe: Recipe?
-    static var all: [FavoriteRecipe] {
+    /*static var all: [FavoriteRecipe] {
         let request: NSFetchRequest<FavoriteRecipe> = FavoriteRecipe.fetchRequest()
         guard let favoriteRecipes = try? AppDelegate.viewContext.fetch(request) else { return [] }
         return favoriteRecipes
-    }
+    }*/
 }
-
-

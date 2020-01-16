@@ -59,10 +59,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         })
         return container
     }()
-    
-    static var persistentContainer: NSPersistentContainer {
-        return (UIApplication.shared.delegate as! AppDelegate).persistentContainer
-    }
 
     // MARK: - Core Data Saving support
 
@@ -79,8 +75,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
-    
-    static var viewContext: NSManagedObjectContext {
-        return persistentContainer.viewContext
-    }
 }
+
