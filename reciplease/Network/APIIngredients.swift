@@ -10,7 +10,7 @@ import Foundation
 import Alamofire
 
 class APIIngredients: NetworkRequestProtocol {
-    func get(_ ingredients: [String], completion: RecipeResults?) {
+     func get(_ ingredients: [String], completion: RecipeResults?) {
         do {
             let request = try Router.search(ingredients: ingredients).asURLRequest()
             Alamofire.request(request).responseJSON { response in
@@ -24,7 +24,6 @@ class APIIngredients: NetworkRequestProtocol {
                         print(error.localizedDescription)
                     }
                 }
-                //print(response)
             }
         } catch {
             print("Error:\(error)")

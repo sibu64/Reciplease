@@ -23,8 +23,8 @@ class SearchViewController: UIViewController, UITableViewDelegate, ActivityIndic
     let activityIndicator = UIActivityIndicatorView()
     private var ingredients: [String] = []
     private var model: Welcome?
-    var apiIngredients: NetworkRequestProtocol = APIIngredients()
     private var recipes = [Recipe]()
+    private var api: NetworkRecipeManager = NetworkRecipeManager.default
     // ***********************************************
     // MARK: - Implementation
     // ***********************************************
@@ -34,31 +34,33 @@ class SearchViewController: UIViewController, UITableViewDelegate, ActivityIndic
         tableView.reloadData()
     }
     
-//    override func viewDidLoad() {
-//        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
-//    }
-    
     // ***********************************************
     // MARK: - Segue
     // ***********************************************
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-         if segue.identifier == "RecipeSegue" {
-             let controller = segue.destination as? RecipesViewController
-             controller?.set(self.recipes, self.ingredients)
+        if segue.identifier == Constants.recipeSegueIdentifier {
+            let controller = segue.destination as? RecipesViewController
+            controller?.set(self.recipes, self.ingredients)
          }
     }
+    
     // ***********************************************
     // MARK: - Private Methods
     // ***********************************************
     private func load() {
         showActivityIndicator()
         guard !ingredients.isEmpty else { return }
-        apiIngredients.get(ingredients) { recipes in
+        api.get(ingredients: ingredients) { recipes in
             self.hideActivityIndicator()
             self.recipes = recipes
-            self.performSegue(withIdentifier: "RecipeSegue", sender: self)
+            self.performSegue(withIdentifier: Constants.recipeSegueIdentifier, sender: self)
         }
     }
+    
+    private func hideKeyboard() {
+         textField?.resignFirstResponder()
+     }
+    
     // ***********************************************
     // MARK: - Actions
     // ***********************************************
@@ -81,12 +83,20 @@ class SearchViewController: UIViewController, UITableViewDelegate, ActivityIndic
         guard !ingredients.isEmpty else { return }
         load()
     }
+    
+    @IBAction func actionHideKeyboard(sender: UITapGestureRecognizer) {
+           self.hideKeyboard()
+       }
 }
 
+
+// ***********************************************
+// MARK: - Tableviews
+// ***********************************************
 extension SearchViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "IngredientViewCell", for: indexPath) as? IngredientViewCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: IngredientViewCell.identifier, for: indexPath) as? IngredientViewCell {
             let ingredient = "- " + ingredients[indexPath.row]
         
             cell.ingredientNameLabel.text = ingredient
@@ -104,12 +114,7 @@ extension SearchViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return ingredients.count
     }
-    func hideKeyboard() {
-        textField?.resignFirstResponder()
-    }
-    @IBAction func actionHideKeyboard(sender: UITapGestureRecognizer) {
-        self.hideKeyboard()
-    }
+    
 }
 
 extension UITextField {
@@ -124,7 +129,7 @@ extension UITextField {
 
 extension SearchViewController: UITextFieldDelegate {
 func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-    textField.resignFirstResponder()
+    hideKeyboard()
     return true
    }
 }

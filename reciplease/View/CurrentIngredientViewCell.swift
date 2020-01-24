@@ -12,5 +12,5 @@ import UIKit
 class CurrentIngredientViewCell: UITableViewCell {
     
     @IBOutlet weak var nameLabel: UILabel?
-    
+    static var identifier = "CurrentIngredientViewCell"
 }
