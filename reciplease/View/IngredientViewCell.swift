@@ -12,5 +12,5 @@ import UIKit
 class IngredientViewCell: UITableViewCell {
     
     @IBOutlet weak var ingredientNameLabel: UILabel!
-
+    static var identifier = "IngredientViewCell"
 }

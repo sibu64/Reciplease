@@ -17,6 +17,8 @@ class RecipeViewCell: UITableViewCell  {
     @IBOutlet weak var rating: UILabel!
     @IBOutlet weak var viewForLayer: GradientView!
     var gradientLayer: CAGradientLayer!
+    
+    static var identifier = "RecipeViewCell"
    
     override func layoutSubviews() {
            super.layoutSubviews()

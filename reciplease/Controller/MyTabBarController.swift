@@ -18,19 +18,10 @@ class MyTabBarController: UITabBarController {
     private var favoriteRecipes: [FavoriteRecipe] {
         return CoreDataManager().fetchAll
     }
-    /*private var recipeController: RecipesViewController? {
-        let navigation = children.last as? UINavigationController
-        return navigation?.children.first as? RecipesViewController
-    }*/
+    
     // ***********************************************
     // MARK: - Implementation
     // ***********************************************
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.delegate = self
@@ -38,9 +29,9 @@ class MyTabBarController: UITabBarController {
         barItemAppearance()
     }
     // ***********************************************
-    // MARK: - Segue
+    // MARK: - Private Methods
     // ***********************************************
-    func setupTabBarSeparators() {
+    private func setupTabBarSeparators() {
         
         let itemWidth = floor(self.myTabBar.frame.size.width / CGFloat(self.myTabBar.items!.count))
         
@@ -75,6 +66,10 @@ class MyTabBarController: UITabBarController {
     }
 }
 
+
+// ***********************************************
+// MARK: - TabBarControllerDelegate
+// ***********************************************
 extension MyTabBarController: UITabBarControllerDelegate {
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
         let navigation = viewController as? UINavigationController
@@ -82,7 +77,7 @@ extension MyTabBarController: UITabBarControllerDelegate {
             controller.recipes = favoriteRecipes.map { Recipe(with: $0) }
             controller.isFromFavorites = true
                     
-            if favoriteRecipes.isEmpty{
+            if favoriteRecipes.isEmpty {
                 let alert = UIAlertController(title: "You don't have any favorite!", message: "You must click on the star on the recipe's detail's screen to add a recipe to your favorite", preferredStyle: .alert)
                 
                 let action = UIAlertAction(title: "I have understood", style: .cancel) { alert in

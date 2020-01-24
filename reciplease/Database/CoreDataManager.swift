@@ -63,18 +63,6 @@ class CoreDataManager {
     func remove( objectID: NSManagedObjectID ) {
         let obj = backgroundContext.object(with: objectID)
         backgroundContext.delete(obj)
-//        let request: NSFetchRequest<FavoriteRecipe> = FavoriteRecipe.fetchRequest()
-//        request.predicate = NSPredicate(format: "identifier='\(String(describing: recipe?.url))'")
-//
-//               do {
-//                   let favoriteRecipe = try persistentContainer.viewContext.fetch(request).first
-//                   if let value = favoriteRecipe {
-//                       persistentContainer.viewContext.delete(value)
-//                       (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
-//                   }
-//               } catch let error {
-//                   print(error)
-//               }
     }
 
     func save() {

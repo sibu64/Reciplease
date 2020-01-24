@@ -8,16 +8,6 @@
 import UIKit
 import CoreData
 
-
-/*class RecipeViewModel {
-    private var model: Recipe
-    var isFavorite: Bool = false
-    
-    init(model: Recipe) {
-        self.model = model
-    }
-}*/
-
 class RecipesViewController: UIViewController, UITableViewDelegate {
     
     // ***********************************************
@@ -52,32 +42,34 @@ class RecipesViewController: UIViewController, UITableViewDelegate {
     
     func clickRecipe(_ sender: UIButton) {
         guard !recipes.isEmpty else { return }
-        self.performSegue(withIdentifier: "DetailSegue", sender: self)
+        self.performSegue(withIdentifier: Constants.detailSegueidentifier, sender: self)
     }
-    
+    // ***********************************************
+    // MARK: - Segue
+    // ***********************************************
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "DetailSegue" {
-            guard let recipe = recipe else {
-                return
-            }
+        if segue.identifier == Constants.detailSegueidentifier {
+            guard let recipe = recipe else { return }
+            
             let controller = segue.destination as? DetailViewController
             controller?.recipe = recipe
-            controller?.isFavorite = isFromFavorites
             controller?.indexPath = (sender as! IndexPath)
             controller?.didDelete({ indexPath in
                 guard let value = indexPath else { return }
                 self.recipes.remove(at: value.row)
                 self.tableView.deleteRows(at: [value], with: .fade)
             })
-            _ = segue.destination as? DetailViewController
         }
     }
 }
 
+// ***********************************************
+// MARK: - Tableviews
+// ***********************************************
 extension RecipesViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "RecipeViewCell", for: indexPath) as? RecipeViewCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: RecipeViewCell.identifier, for: indexPath) as? RecipeViewCell {
             let item = recipes[indexPath.row]
             
             cell.recipeLabel.text = item.label
@@ -113,7 +105,7 @@ extension RecipesViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         recipe = self.recipes[indexPath.row]
-        self.performSegue(withIdentifier: "DetailSegue", sender: indexPath)
+        self.performSegue(withIdentifier: Constants.detailSegueidentifier, sender: indexPath)
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {

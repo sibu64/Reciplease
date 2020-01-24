@@ -22,7 +22,6 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     // Properties
     private var coreDataManager = CoreDataManager()
     var recipe: Recipe?
-    var isFavorite: Bool = false
     var indexPath: IndexPath?
     var currentIngredientViewCell: CurrentIngredientViewCell?
     private var didDelete: ((IndexPath?)->Void)?
@@ -41,8 +40,9 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         totalTime.text = String(Int(recipe?.totalTime ?? 0.0)) + " min"
         loadPicture()
         
-        changeAppearanceForFavorite(isFavorite: isFavorite)
+        changeAppearanceForFavorite(isFavorite: isFavorite())
         
+        //Closure to avoid duplicates in the favorite recipes
         coreDataManager.persistentContainer.loadPersistentStores { storeDescription, error in
             self.coreDataManager.persistentContainer.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
 
@@ -55,6 +55,13 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.ingredientsTableView.reloadData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        let recipeIsInFavorite = isFavorite()
+        changeAppearanceForFavorite(isFavorite: recipeIsInFavorite)
     }
     
     func changeAppearanceForFavorite(isFavorite: Bool) {
@@ -79,14 +86,12 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     @IBAction func favClicked(_ sender: UIBarButtonItem) {
-        if isFavorite == false {
-            self.isFavorite = true
+        if isFavorite() == false {
             changeAppearanceForFavorite(isFavorite: true)
             saveFavoriteRecipe()
         } else {
             deleteFavoriteRecipe()
             changeAppearanceForFavorite(isFavorite: false)
-            self.isFavorite = false
             self.navigationController?.popViewController(animated: true)
             self.didDelete?(indexPath)
         }
@@ -114,12 +119,34 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
             coreDataManager.save()
         }
     }
+    
+    private func loadPicture() {
+        if let imageURL = URL(string:recipe!.image) {
+            DispatchQueue.global().async {
+                let data = try? Data(contentsOf: imageURL)
+                if let data = data {
+                   let image = UIImage(data: data)
+                    DispatchQueue.main.async {
+                        self.recipeImage.image = image
+                    }
+                }
+            }
+        }
+    }
+    
+    private func isFavorite() ->Bool {
+        guard let value = recipe else { return false }
+        if let favoriteRecipe = coreDataManager.find(value) {
+            return favoriteRecipe.isFavorite
+        }
+        return false
+    }
     // ***********************************************
-    // MARK: - TABLEVIEWS
+    // MARK: - Tableviews
     // ***********************************************
     
     internal func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-            let cell: CurrentIngredientViewCell = ingredientsTableView.dequeueReusableCell(withIdentifier: "CurrentIngredientViewCell", for:indexPath) as! CurrentIngredientViewCell
+        let cell: CurrentIngredientViewCell = ingredientsTableView.dequeueReusableCell(withIdentifier: CurrentIngredientViewCell.identifier, for:indexPath) as! CurrentIngredientViewCell
             let ingredient = self.recipe?.ingredients?[indexPath.row].food
             cell.nameLabel?.text = "- " + ingredient!
 
@@ -135,22 +162,4 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         return recipe?.ingredients?.count ?? 0
     }
     
-    
-    // ***********************************************
-    // MARK: - Private Methods
-    // ***********************************************
-    
-    private func loadPicture() {
-        if let imageURL = URL(string:recipe!.image) {
-            DispatchQueue.global().async {
-                let data = try? Data(contentsOf: imageURL)
-                if let data = data {
-                   let image = UIImage(data: data)
-                    DispatchQueue.main.async {
-                        self.recipeImage.image = image
-                    }
-                }
-            }
-        }
-    }
 }

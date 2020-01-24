@@ -47,14 +47,11 @@ class FavoriteRecipesTests: XCTestCase {
         let items = sut.fetchAll
         let item = items[0]
         
-        let numberOfItems = items.count
-        
         //When remove a item
         sut.remove(objectID: item.objectID)
         sut.save()
         
-        //Assert number of item - 1
-        XCTAssertEqual(numberOfItemsInPersistentStore(), numberOfItems-1)
+        XCTAssertEqual(numberOfItemsInPersistentStore(), 1)
     }
     
     func test_find_recipe_and_convert_to_favoriteRecipe() {
@@ -65,7 +62,7 @@ class FavoriteRecipesTests: XCTestCase {
     }
     
     func test_save() {
-        //Give a todo item
+        //Give a recipe
         let identifier = "https://www.marmiton.org/recettes/recette_poulet"
         let imageURL = "https://image.com"
         let ingredients = "chicken"
