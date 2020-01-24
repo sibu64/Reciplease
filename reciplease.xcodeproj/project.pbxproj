@@ -28,6 +28,7 @@
 		6E294D34237AEF7F00E1C384 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E294D33237AEF7F00E1C384 /* Router.swift */; };
 		6E2A11242397F349009996EC /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E2A11232397F349009996EC /* GradientView.swift */; };
 		6E2F6837235EED990042C476 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E2F6836235EED990042C476 /* Constants.swift */; };
+		6E3EDF1C23DB142500A5C75C /* UITextfield+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E3EDF1B23DB142500A5C75C /* UITextfield+extension.swift */; };
 		6E3F526C2358EBBC00B0A634 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E3F526B2358EBBC00B0A634 /* AppDelegate.swift */; };
 		6E3F526E2358EBBC00B0A634 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E3F526D2358EBBC00B0A634 /* SceneDelegate.swift */; };
 		6E3F52702358EBBC00B0A634 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E3F526F2358EBBC00B0A634 /* SearchViewController.swift */; };
@@ -62,6 +63,8 @@
 
 /* Begin PBXFileReference section */
 		0AAAA1279BFD3A3664184897 /* Pods_reciplease.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_reciplease.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0AC3CE9A45C1B55AD12127B2 /* Pods-reciplease.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-reciplease.debug.xcconfig"; path = "Target Support Files/Pods-reciplease/Pods-reciplease.debug.xcconfig"; sourceTree = "<group>"; };
+		3FC7C51669A0D5B3C7E152FC /* Pods-recipleaseTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-recipleaseTests.debug.xcconfig"; path = "Target Support Files/Pods-recipleaseTests/Pods-recipleaseTests.debug.xcconfig"; sourceTree = "<group>"; };
 		69721D7423D5EBB200AE13A7 /* NetworkRecipeManager_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRecipeManager_Tests.swift; sourceTree = "<group>"; };
 		69841D9923CF46C3000DE902 /* FavoriteRecipesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteRecipesTests.swift; sourceTree = "<group>"; };
 		69841D9B23CF4723000DE902 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
@@ -73,6 +76,7 @@
 		6E294D33237AEF7F00E1C384 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		6E2A11232397F349009996EC /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		6E2F6836235EED990042C476 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		6E3EDF1B23DB142500A5C75C /* UITextfield+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextfield+extension.swift"; sourceTree = "<group>"; };
 		6E3F52682358EBBC00B0A634 /* reciplease.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = reciplease.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E3F526B2358EBBC00B0A634 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6E3F526D2358EBBC00B0A634 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -96,6 +100,8 @@
 		6EE827C4239A5BAB00ADDE4E /* ActivityIndicatorPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityIndicatorPresenter.swift; sourceTree = "<group>"; };
 		6EE827C6239A5C0500ADDE4E /* ActivityIndicatorPresenter+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ActivityIndicatorPresenter+extension.swift"; sourceTree = "<group>"; };
 		A6F064C7548A1EE33F92158E /* Pods_recipleaseTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_recipleaseTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D1F1C16EE4F5E711E593B3F7 /* Pods-reciplease.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-reciplease.release.xcconfig"; path = "Target Support Files/Pods-reciplease/Pods-reciplease.release.xcconfig"; sourceTree = "<group>"; };
+		DBF7BE202382956972864611 /* Pods-recipleaseTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-recipleaseTests.release.xcconfig"; path = "Target Support Files/Pods-recipleaseTests/Pods-recipleaseTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,10 +133,22 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		67F52428968BDE2E69D58D5A /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				0AC3CE9A45C1B55AD12127B2 /* Pods-reciplease.debug.xcconfig */,
+				D1F1C16EE4F5E711E593B3F7 /* Pods-reciplease.release.xcconfig */,
+				3FC7C51669A0D5B3C7E152FC /* Pods-recipleaseTests.debug.xcconfig */,
+				DBF7BE202382956972864611 /* Pods-recipleaseTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		69721DA423D5F27000AE13A7 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
 				6EE827C6239A5C0500ADDE4E /* ActivityIndicatorPresenter+extension.swift */,
+				6E3EDF1B23DB142500A5C75C /* UITextfield+extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -179,6 +197,7 @@
 				6E3F52842358EBBE00B0A634 /* recipleaseTests */,
 				6E3F52692358EBBC00B0A634 /* Products */,
 				349415C7106F075B426BB93B /* Frameworks */,
+				67F52428968BDE2E69D58D5A /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -433,6 +452,7 @@
 				6E2A11242397F349009996EC /* GradientView.swift in Sources */,
 				6ECDCDEE23687204000C395C /* APIIngredients.swift in Sources */,
 				6EBA81AF23D1E49400A0ACEA /* NetworkRecipeManager.swift in Sources */,
+				6E3EDF1C23DB142500A5C75C /* UITextfield+extension.swift in Sources */,
 				6E26DDA923B4EE0600B6BE54 /* NetworkRequestProtocol.swift in Sources */,
 				6EAB878E236ADD1500C5A2E2 /* RecipeViewCell.swift in Sources */,
 				6E44ACAA2396672B006C516C /* DetailViewController.swift in Sources */,
@@ -615,6 +635,7 @@
 		};
 		6E3F528B2358EBBE00B0A634 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0AC3CE9A45C1B55AD12127B2 /* Pods-reciplease.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -634,6 +655,7 @@
 		};
 		6E3F528C2358EBBE00B0A634 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D1F1C16EE4F5E711E593B3F7 /* Pods-reciplease.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -653,6 +675,7 @@
 		};
 		6E3F528E2358EBBE00B0A634 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3FC7C51669A0D5B3C7E152FC /* Pods-recipleaseTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -675,6 +698,7 @@
 		};
 		6E3F528F2358EBBE00B0A634 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DBF7BE202382956972864611 /* Pods-recipleaseTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";

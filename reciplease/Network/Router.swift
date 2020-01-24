@@ -9,24 +9,21 @@
 import Alamofire
 
 
-enum Router: URLRequestConvertible
-{
+enum Router: URLRequestConvertible {
     
     case search(ingredients: [String])
     
     
     static let baseURLString = "https://api.edamam.com"
     
-    var method: HTTPMethod
-    {
+    var method: HTTPMethod {
         switch self {
         case .search:
             return .get
         }
     }
     
-    var path: String
-    {
+    var path: String {
         switch self {
         case .search( _):
             return "search"
@@ -35,8 +32,7 @@ enum Router: URLRequestConvertible
     
     // MARK: URLRequestConvertible
     
-    func asURLRequest() throws -> URLRequest
-    {
+    func asURLRequest() throws -> URLRequest {
         let url = try Router.baseURLString.asURL()
         let urlPath = url.appendingPathComponent(path)
         
