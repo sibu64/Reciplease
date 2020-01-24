@@ -20,12 +20,10 @@
 		69841DA923CF5782000DE902 /* NetworkRequestProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E26DDA823B4EE0600B6BE54 /* NetworkRequestProtocol.swift */; };
 		69841DAA23CF5797000DE902 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E2F6836235EED990042C476 /* Constants.swift */; };
 		69841DAB23CF57A8000DE902 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69841D9B23CF4723000DE902 /* CoreDataManager.swift */; };
-		69907BF723B1FB8900D7E9E7 /* protocol_alamofire.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69907BF623B1FB8900D7E9E7 /* protocol_alamofire.swift */; };
 		69907BF923B1FBBB00D7E9E7 /* search.json in Resources */ = {isa = PBXBuildFile; fileRef = 69907BF823B1FBBB00D7E9E7 /* search.json */; };
 		69F0B96923C46BB60032C7DE /* JSON+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69F0B96823C46BB60032C7DE /* JSON+Extension.swift */; };
 		6E0A85322360868D0057F1D6 /* IngredientViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0A85312360868D0057F1D6 /* IngredientViewCell.swift */; };
 		6E0E72DE239A977A0022CCB4 /* FavoriteRecipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0E72DD239A977A0022CCB4 /* FavoriteRecipe.swift */; };
-		6E26DDA623B4DBFB00B6BE54 /* ApiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E26DDA523B4DBFB00B6BE54 /* ApiTests.swift */; };
 		6E26DDA923B4EE0600B6BE54 /* NetworkRequestProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E26DDA823B4EE0600B6BE54 /* NetworkRequestProtocol.swift */; };
 		6E294D34237AEF7F00E1C384 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E294D33237AEF7F00E1C384 /* Router.swift */; };
 		6E2A11242397F349009996EC /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E2A11232397F349009996EC /* GradientView.swift */; };
@@ -69,12 +67,10 @@
 		69721D7423D5EBB200AE13A7 /* NetworkRecipeManager_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRecipeManager_Tests.swift; sourceTree = "<group>"; };
 		69841D9923CF46C3000DE902 /* FavoriteRecipesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteRecipesTests.swift; sourceTree = "<group>"; };
 		69841D9B23CF4723000DE902 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
-		69907BF623B1FB8900D7E9E7 /* protocol_alamofire.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = protocol_alamofire.swift; sourceTree = "<group>"; };
 		69907BF823B1FBBB00D7E9E7 /* search.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = search.json; sourceTree = "<group>"; };
 		69F0B96823C46BB60032C7DE /* JSON+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JSON+Extension.swift"; sourceTree = "<group>"; };
 		6E0A85312360868D0057F1D6 /* IngredientViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientViewCell.swift; sourceTree = "<group>"; };
 		6E0E72DD239A977A0022CCB4 /* FavoriteRecipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteRecipe.swift; sourceTree = "<group>"; };
-		6E26DDA523B4DBFB00B6BE54 /* ApiTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiTests.swift; sourceTree = "<group>"; };
 		6E26DDA823B4EE0600B6BE54 /* NetworkRequestProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRequestProtocol.swift; sourceTree = "<group>"; };
 		6E294D33237AEF7F00E1C384 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		6E2A11232397F349009996EC /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
@@ -236,10 +232,8 @@
 			isa = PBXGroup;
 			children = (
 				69F0B96723C46BA30032C7DE /* JSON */,
-				6E26DDA523B4DBFB00B6BE54 /* ApiTests.swift */,
 				69721D7423D5EBB200AE13A7 /* NetworkRecipeManager_Tests.swift */,
 				6E3F52872358EBBE00B0A634 /* Info.plist */,
-				69907BF623B1FB8900D7E9E7 /* protocol_alamofire.swift */,
 				6EB1D8D723C3808F00493ADC /* APIIngredientsFake.swift */,
 				69841D9923CF46C3000DE902 /* FavoriteRecipesTests.swift */,
 			);
@@ -479,8 +473,6 @@
 				6EB1D8D823C3808F00493ADC /* APIIngredientsFake.swift in Sources */,
 				69F0B96923C46BB60032C7DE /* JSON+Extension.swift in Sources */,
 				69721D7523D5EBB200AE13A7 /* NetworkRecipeManager_Tests.swift in Sources */,
-				6E26DDA623B4DBFB00B6BE54 /* ApiTests.swift in Sources */,
-				69907BF723B1FB8900D7E9E7 /* protocol_alamofire.swift in Sources */,
 				69841D9D23CF49ED000DE902 /* reciplease.xcdatamodeld in Sources */,
 				69841DAA23CF5797000DE902 /* Constants.swift in Sources */,
 				69841DA623CF577C000DE902 /* Recipe.swift in Sources */,
